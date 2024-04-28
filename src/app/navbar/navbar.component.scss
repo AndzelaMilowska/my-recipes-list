@@ -1,17 +1,23 @@
 @import '../../scss/variables.scss';
+
+:host {
+    margin-right: 1rem;
+    width: 30vw;
+    height: 100vh;
+}
+
 .sidebar {
     background-color: $primary-color-01;
     height: 100%;
-    width: 20rem;
-    position: sticky;
     top: 0;
     align-items: center;
+    min-width: 15rem;
 }
 
 //add mixin for base sidebar element
 .sidebar__button {
     all: unset;
-    color: $white-no-alpha;
+    color: $white;
     cursor: pointer;
     display: flex;
     width: 70%;
@@ -22,12 +28,13 @@
     height: 1rem;
     font-size: 1.25rem;
     margin: 0.5rem 0;
-    border: 2px solid $white-no-alpha;
-    background-color: $white-low-alpha;
+    border: 2px solid $white;
+    background-color: $white_0_25;
     overflow: hidden;
+    position: relative;
 
     &:hover {
-        background-color: $white-mid-alpha;
+        background-color: $white_0_4;
     }
 }
 
@@ -43,8 +50,8 @@
     width: 1.5rem;
     height: 1.5rem;
     margin-right: 0.5rem;
-    position: fixed;
-    left: 3.5rem;
+    position: absolute;
+    left: 1rem;
 }
 
 .sidebar__categories {
@@ -60,15 +67,17 @@
     border: 2px solid white;
     border-top: 0;
     background-color: rgba(255, 255, 255, 0.25);
-    
+
 
     li {
         width: 100%;
         padding: 0.25rem 0;
+
         &:hover {
-            background-color: $white-mid-alpha;
+            background-color: $white_0_4;
         }
     }
+
     &__button {
         all: unset;
         font-size: 1rem;
@@ -85,14 +94,16 @@
 
 
 }
-.sidebar__searchbar{
-    all:unset;
+
+.sidebar__searchbar {
+    all: unset;
     display: block;
-    color: $white-no-alpha;
+    color: $white;
     border: none;
     padding-left: 2rem;
     overflow: hidden;
+
     &::placeholder {
-        color: $white-mid-alpha;
+        color: $white_0_4;
     }
 }

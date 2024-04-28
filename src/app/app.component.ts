@@ -13,7 +13,10 @@ export class AppComponent {
   title = 'my-recipes-list';
 }
 
-// add routes and generate basic components
-//pointer on sidebar menu
-// create css constants file
-//logged in toggle dummy
+//convert from standalone
+//improve units usage
+
+
+
+//recipes page -add form 
+//recipes - add service -> recipes storage, add recipe method, remoce recipe method

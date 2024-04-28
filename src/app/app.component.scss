@@ -1,12 +1,13 @@
-.app-body {
+:host {
     height: 100vh;
     overflow: scroll;
+    position: relative;
 }
 
 .testo {
     height: 100rem;
 }
 
-app-navbar {
-    margin-right: 1rem;
+.content-container {
+    width: auto;
 }
