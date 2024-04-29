@@ -10,5 +10,4 @@ export class NavbarComponent {
   categoriesList: string[] = this.categoriesService.categories;
   constructor(private categoriesService: CategoriesService) {}
   categoriesVisibility: boolean = true;
-
 }
