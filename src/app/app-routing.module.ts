@@ -1,7 +1,8 @@
-import { Routes } from '@angular/router';
-import { RecipesComponent } from './recipes/recipes.component';
+import {RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { LoginComponent } from './http/login/login.component';
 import { RecipeComponent } from './recipes/recipe/recipe.component';
+import { RecipesComponent } from './recipes/recipes.component';
 
 export const routes: Routes = [
     {path: 'login',
@@ -15,3 +16,9 @@ export const routes: Routes = [
     }
 
 ];
+
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
+  })
+  export class AppRoutingModule {}

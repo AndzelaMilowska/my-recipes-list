@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { CategoriesService } from '../shared/categories.service';
-import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import { CategoriesService } from '../categories.service';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })

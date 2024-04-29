@@ -1,17 +1,16 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-@Injectable({providedIn: "root",
-})
+@Injectable({ providedIn: 'root' })
 export class CategoriesService {
-categories: string[] = [
+  categories: string[] = [
     'Dinners',
     'Lunch',
     'Soups',
     'Desserts',
-    'Breakfasts'
-]
+    'Breakfasts',
+  ];
 
-addCategoty(categoryName: string) {
-this.categories.push(categoryName)
-}
+  addCategoty(categoryName: string) {
+    this.categories.push(categoryName);
+  }
 }
