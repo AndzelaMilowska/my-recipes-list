@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RecipesService } from '../recipes.service';
+import { Recipe, RecipesService } from '../recipes.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recipe',
@@ -7,13 +8,22 @@ import { RecipesService } from '../recipes.service';
   styleUrl: './recipe.component.scss',
 })
 export class RecipeComponent implements OnInit {
-  constructor(private recipes: RecipesService) {}
-  activeRecipe = this.recipes.recipes[0]; //placeholder data
-  initialPortions: number = this.activeRecipe.numberOfPortions;
+  constructor(
+    private recipes: RecipesService,
+    private route: ActivatedRoute,
+  ) {}
+  id: number;
+  activeRecipe: Recipe;
+  initialPortions: number;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.route.snapshot.paramMap.get('id')) {
+      this.id = +this.route.snapshot.paramMap.get('id')!;
+      this.activeRecipe = this.recipes.recipeById(this.id); //placeholder data
+      this.initialPortions = this.activeRecipe.numberOfPortions;
+    }
+  }
 }
 
-//this should be single recipe display component
 //create another recipe edit for edditing and adding recipe
 //add WYSIWYG to recipe editor?? --> storing all text data, not just a string

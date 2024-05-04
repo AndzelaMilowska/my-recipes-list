@@ -49,6 +49,8 @@
 .recipe__img {
   max-height: 60vh;
   border-radius: 1rem;
+  max-width: 50%;
+  object-fit: cover;
 }
 
 .recipe__body {

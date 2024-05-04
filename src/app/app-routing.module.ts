@@ -7,7 +7,7 @@ import { RecipesComponent } from './recipes/recipes.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'recipes', component: RecipesComponent },
-  { path: 'recipe', component: RecipeComponent },
+  { path: 'recipe/:id', component: RecipeComponent },
 ];
 
 @NgModule({
@@ -15,3 +15,7 @@ export const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
+
+//jak routing działa
+//bierze id z klikniętego przepisu
+//podaje dalej --> czy podaje do url i komponent zaciąga go z url?
