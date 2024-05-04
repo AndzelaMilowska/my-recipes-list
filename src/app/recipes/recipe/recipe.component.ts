@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Recipe, RecipesService } from '../recipes.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,16 +10,16 @@ import { ActivatedRoute } from '@angular/router';
 export class RecipeComponent implements OnInit {
   constructor(
     private recipes: RecipesService,
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
   ) {}
-  id: number;
+  @Input() id: string;
+
   activeRecipe: Recipe;
   initialPortions: number;
 
   ngOnInit(): void {
-    if (this.route.snapshot.paramMap.get('id')) {
-      this.id = +this.route.snapshot.paramMap.get('id')!;
-      this.activeRecipe = this.recipes.recipeById(this.id); //placeholder data
+    if (this.id) {
+      this.activeRecipe = this.recipes.recipeById(+this.id);
       this.initialPortions = this.activeRecipe.numberOfPortions;
     }
   }
