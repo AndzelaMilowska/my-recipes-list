@@ -1,0 +1,56 @@
+@import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
+
+:host {
+  // padding: 1rem;
+  display: inline-flex;
+
+  & h3 {
+    padding: 0.5rem;
+  }
+}
+.recipe-thumbnail__container {
+  justify-content: space-around;
+  max-width: 100%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 1rem 0.25rem;
+}
+.recipe-thumbnail {
+  @include border-01;
+  margin: 0.25rem;
+  height: inherit;
+  // max-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  max-width: 32%;
+  padding: 1rem 0.25rem;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &__img {
+    max-width: 100%;
+    object-fit: cover;
+    max-height: 100%;
+  }
+
+  &__img-container {
+    padding: 0.5rem;
+    max-width: 100%;
+    // height: 100%;
+  }
+
+  &__description {
+    margin: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

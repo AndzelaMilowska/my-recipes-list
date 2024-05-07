@@ -7,6 +7,7 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { LoginComponent } from './http/login/login.component';
 import { AppComponent } from './app.component';
 import { RecipeComponent } from './recipes/recipe/recipe.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { RecipeComponent } from './recipes/recipe/recipe.component';
     RecipesComponent,
     LoginComponent,
     RecipeComponent,
+    RecipeEditComponent,
   ],
   imports: [BrowserModule, RouterOutlet, AppRoutingModule],
   providers: [],

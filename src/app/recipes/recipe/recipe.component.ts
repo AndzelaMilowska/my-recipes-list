@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Recipe, RecipesService } from '../recipes.service';
-import { ActivatedRoute } from '@angular/router';
+import { RecipesService } from '../recipes.service';
+import { Recipe } from '../recipe.interface';
 
 @Component({
   selector: 'app-recipe',
@@ -8,10 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './recipe.component.scss',
 })
 export class RecipeComponent implements OnInit {
-  constructor(
-    private recipes: RecipesService,
-    // private route: ActivatedRoute,
-  ) {}
+  constructor(private recipes: RecipesService) {}
   @Input() id: string;
 
   activeRecipe: Recipe;
@@ -22,6 +19,17 @@ export class RecipeComponent implements OnInit {
       this.activeRecipe = this.recipes.recipeById(+this.id);
       this.initialPortions = this.activeRecipe.numberOfPortions;
     }
+  }
+
+  reduceNumberOfPortions() {
+    this.activeRecipe.numberOfPortions <= 1
+      ? (this.activeRecipe.numberOfPortions = 1)
+      : (this.activeRecipe.numberOfPortions =
+          this.activeRecipe.numberOfPortions - 1);
+  }
+
+  increaseNumberOfPortions() {
+    this.activeRecipe.numberOfPortions = this.activeRecipe.numberOfPortions + 1;
   }
 }
 

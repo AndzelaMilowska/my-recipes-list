@@ -16,9 +16,10 @@
 </div>
 
 <!-- Imgs  and Description-->
-<div class="recipe__description-container" *ngIf="activeRecipe.imgs">
+<div class="recipe__description-container">
   <p>{{ activeRecipe.description }}</p>
   <img
+    *ngIf="activeRecipe.imgs"
     class="recipe__img"
     src="{{ activeRecipe.imgs[0] }}"
     alt="recipe image"
@@ -33,26 +34,9 @@
       <h2>Ingredients</h2>
       <!-- Ingredients multiplier -->
       <div class="ingredients__multiplier">
-        <button
-          class="btn"
-          (click)="
-            activeRecipe.numberOfPortions <= 1
-              ? (activeRecipe.numberOfPortions = 1)
-              : (activeRecipe.numberOfPortions =
-                  activeRecipe.numberOfPortions - 1)
-          "
-        >
-          -
-        </button>
+        <button class="btn" (click)="reduceNumberOfPortions()">-</button>
         <p>{{ activeRecipe.numberOfPortions }} servings</p>
-        <button
-          class="btn"
-          (click)="
-            activeRecipe.numberOfPortions = activeRecipe.numberOfPortions + 1
-          "
-        >
-          +
-        </button>
+        <button class="btn" (click)="increaseNumberOfPortions()">+</button>
       </div>
     </div>
     <!-- Ingredients List -->

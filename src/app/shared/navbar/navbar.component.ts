@@ -9,5 +9,5 @@ import { CategoriesService } from '../categories.service';
 export class NavbarComponent {
   categoriesList: string[] = this.categoriesService.categories;
   constructor(private categoriesService: CategoriesService) {}
-  categoriesVisibility: boolean = true;
+  categoriesVisibility: boolean = false;
 }

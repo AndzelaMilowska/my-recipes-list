@@ -1,1 +1,19 @@
-<p>recipes works!</p>
+<div class="recipe-thumbnail__container">
+  <div
+    class="recipe-thumbnail col-4 rounded"
+    *ngFor="let recipe of allRecipesList"
+    (click)="onClick(recipe.id)"
+  >
+    <h3>{{ recipe.title }}</h3>
+    <div *ngIf="recipe.imgs" class="recipe-thumbnail__img-container">
+      <img
+        class="recipe-thumbnail__img rounded"
+        src="{{ recipe.imgs[0] }}"
+        alt=""
+      />
+    </div>
+    <p *ngIf="!recipe.imgs" class="recipe-thumbnail__description">
+      {{ recipe.description }}
+    </p>
+  </div>
+</div>
