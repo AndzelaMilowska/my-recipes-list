@@ -1,1 +1,62 @@
-<p>recipe works!</p>
+<div class="recipe__header-container">
+  <h1 class="recipe__header">{{ activeRecipe.title }}</h1>
+
+  <!-- Categories Tags -->
+  <div *ngIf="activeRecipe.categories" class="recipe__categories-container">
+    <button
+      class="recipe__category-button rounded"
+      *ngFor="let category of activeRecipe.categories"
+    >
+      {{ category }}
+    </button>
+  </div>
+
+  <!-- Edit Button -->
+  <button class="recipe__edit-button rounded">Edit</button>
+</div>
+
+<!-- Imgs  and Description-->
+<div class="recipe__description-container">
+  <p>{{ activeRecipe.description }}</p>
+  <img
+    *ngIf="activeRecipe.imgs"
+    class="recipe__img"
+    src="{{ activeRecipe.imgs[0] }}"
+    alt="recipe image"
+  />
+</div>
+
+<div class="recipe__body row">
+  <!-- Ingredients section -->
+  <div class="recipe__ingredients-container col-4">
+    <!-- Ingredients Header -->
+    <div class="recipe__ingredients-header">
+      <h2>Ingredients</h2>
+      <!-- Ingredients multiplier -->
+      <div class="ingredients__multiplier">
+        <button class="btn" (click)="reduceNumberOfPortions()">-</button>
+        <p>{{ activeRecipe.numberOfPortions }} servings</p>
+        <button class="btn" (click)="increaseNumberOfPortions()">+</button>
+      </div>
+    </div>
+    <!-- Ingredients List -->
+    <ul>
+      <li *ngFor="let ingredient of activeRecipe.ingredientsList">
+        {{
+          (ingredient.amount / initialPortions) * activeRecipe.numberOfPortions
+        }}{{ ingredient.unit }} {{ ingredient.name }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Method Section -->
+  <div class="recipe__method col-8">
+    <h2>Instructions</h2>
+    <ul>
+      <li *ngFor="let step of activeRecipe.instructions; index as i">
+        <h3>{{ i + 1 }}.</h3>
+        <p>{{ step }}</p>
+      </li>
+    </ul>
+  </div>
+</div>

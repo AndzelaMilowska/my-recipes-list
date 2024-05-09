@@ -1,11 +1,21 @@
 <nav class="h-100 sidebar d-flex flex-column p-3">
   <!-- <button>Logout/login</button>  ngIf ='isLoggedIn'-->
-  <button class="sidebar__button" type="button" routerLink="/login">
+  <button
+    class="sidebar__button"
+    type="button"
+    routerLink="/login"
+    routerLinkActive="active"
+  >
     <img class="sidebar__icon" src="./../../assets/login-icon.svg" />
     Login
   </button>
 
-  <button class="sidebar__button active" type="button" routerLink="/recipe">
+  <button
+    class="sidebar__button"
+    type="button"
+    routerLink="/edit"
+    routerLinkActive="active"
+  >
     <img class="sidebar__icon" src="./../../assets/add-recipe-icon.svg" />
     Add recipe
   </button>
@@ -15,6 +25,7 @@
     type="button"
     (click)="categoriesVisibility = !categoriesVisibility"
     routerLink="/recipes"
+    routerLinkActive="active"
   >
     <img class="sidebar__icon" src="./../../assets/recipes-icon.svg" />
     Recipes
