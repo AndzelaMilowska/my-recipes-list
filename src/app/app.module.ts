@@ -8,6 +8,7 @@ import { LoginComponent } from './http/login/login.component';
 import { AppComponent } from './app.component';
 import { RecipeComponent } from './recipes/recipe/recipe.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
     RecipeComponent,
     RecipeEditComponent,
   ],
-  imports: [BrowserModule, RouterOutlet, AppRoutingModule],
+  imports: [BrowserModule, RouterOutlet, AppRoutingModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -1,1 +1,124 @@
-<p>recipe-edit works!</p>
+<form [formGroup]="recipeForm" (ngSubmit)="saveRecipe()">
+  <div>
+    <label for="title"></label>
+    <input id="title" type="text" formControlName="title" />
+  </div>
+
+  <div>
+    <label for="desctiption"></label>
+    <input id="desctiption" type="text" formControlName="desctiption" />
+  </div>
+
+  <!-- ingredients list -->
+  <div formArrayName="ingredients">
+    <button class="btn btn-success" type="button" (click)="addIngredient()">
+      +
+    </button>
+    <ul>
+      <li
+        *ngFor="
+          let ingredient of getFormArray('ingredients').controls;
+          let i = index
+        "
+      >
+        <div [formGroup]="$any(ingredient)">
+          <label for="{{ 'ingredient_' + i }}"></label>
+          <input
+            id="{{ 'ingredient_' + i }}"
+            type="text"
+            formControlName="ingredientName"
+            placeholder="Add ingredient"
+          />
+          <label for="{{ 'ingredientQuantity_' + i }}"></label>
+          <input
+            id="{{ 'ingredientQuantity_' + i }}"
+            type="number"
+            min="1"
+            formControlName="ingredientAmount"
+          />
+
+          <label for="{{ 'quantityUnit_' + i }}"></label>
+          <select
+            id="{{ 'quantityUnit_' + i }}"
+            type="number"
+            min="1"
+            formControlName="unit"
+          >
+            <option *ngFor="let unit of unitsList" [value]="unit.value">
+              {{ unit.shorthand }}
+            </option>
+          </select>
+          <button
+            class="btn btn-danger"
+            type="button"
+            (click)="removeAtIdex(i, 'ingredients')"
+          >
+            x
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- instructions list -->
+  <div formArrayName="instructions">
+    <button
+      class="btn btn-success"
+      type="button"
+      (click)="addControl(getFormArray('instructions'))"
+    >
+      +
+    </button>
+    <ol>
+      <li
+        *ngFor="
+          let instruction of getFormArray('instructions').controls;
+          let i = index
+        "
+      >
+        <!-- do I need labels if i dont want to display any text? -->
+        <label for="instruction_{{ i }}"></label>
+        <input
+          id="instruction_{{ i }}"
+          type="text"
+          [formControlName]="i"
+          placeholder="Enter next step.."
+        />
+        <button
+          class="btn btn-danger"
+          type="button"
+          (click)="removeAtIdex(i, 'instructions')"
+        >
+          x
+        </button>
+      </li>
+    </ol>
+  </div>
+
+  <div formArrayName="categories">
+    <div
+      *ngFor="
+        let categories of getFormArray('categories').controls;
+        let i = index
+      "
+    >
+      <label for="categoryInput"></label>
+      <input
+        id="categoryInput"
+        type="text"
+        [formControlName]="i"
+        placeholder="category"
+        (keydown.enter)="addControl(getFormArray('categories'))"
+      />
+      <button
+        type="button"
+        *ngIf="getFormControlFromArray('categories', i).dirty"
+        (click)="removeAtIdex(i, 'categories')"
+      >
+        x
+      </button>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Save</button>
+</form>
