@@ -1,14 +1,38 @@
 <form [formGroup]="recipeForm" (ngSubmit)="saveRecipe()">
   <div>
     <label for="title"></label>
-    <input id="title" type="text" formControlName="title" />
+    <input
+      id="title"
+      type="text"
+      formControlName="title"
+      placeholder="Recipe Title"
+    />
   </div>
 
   <div>
     <label for="desctiption"></label>
-    <input id="desctiption" type="text" formControlName="desctiption" />
+    <input
+      id="desctiption"
+      type="text"
+      formControlName="desctiption"
+      placeholder="Recipe desctiption"
+    />
   </div>
-
+  <div>
+    <label for="image">Recipe image</label>
+    <input
+      type="file"
+      id="image"
+      accept="image/png, image/jpeg"
+      (change)="updatePreviewImg($event)"
+    />
+    <img
+      [src]="imagePreview"
+      alt="Recipe image"
+      width="250"
+      *ngIf="imagePreview"
+    />
+  </div>
   <!-- ingredients list -->
   <div formArrayName="ingredients">
     <button class="btn btn-success" type="button" (click)="addIngredient()">
@@ -26,7 +50,7 @@
           <input
             id="{{ 'ingredient_' + i }}"
             type="text"
-            formControlName="ingredientName"
+            formControlName="name"
             placeholder="Add ingredient"
           />
           <label for="{{ 'ingredientQuantity_' + i }}"></label>
@@ -34,7 +58,7 @@
             id="{{ 'ingredientQuantity_' + i }}"
             type="number"
             min="1"
-            formControlName="ingredientAmount"
+            formControlName="amount"
           />
 
           <label for="{{ 'quantityUnit_' + i }}"></label>
@@ -51,6 +75,7 @@
           <button
             class="btn btn-danger"
             type="button"
+            *ngIf="getFormArray('ingredients').length > 1"
             (click)="removeAtIdex(i, 'ingredients')"
           >
             x
@@ -76,7 +101,6 @@
           let i = index
         "
       >
-        <!-- do I need labels if i dont want to display any text? -->
         <label for="instruction_{{ i }}"></label>
         <input
           id="instruction_{{ i }}"
@@ -87,6 +111,7 @@
         <button
           class="btn btn-danger"
           type="button"
+          *ngIf="getFormArray('instructions').length > 1"
           (click)="removeAtIdex(i, 'instructions')"
         >
           x
@@ -108,11 +133,11 @@
         type="text"
         [formControlName]="i"
         placeholder="category"
-        (keydown.enter)="addControl(getFormArray('categories'))"
+        (keydown.enter)="addControlToArrayByLastElement(i, 'categories')"
       />
       <button
         type="button"
-        *ngIf="getFormControlFromArray('categories', i).dirty"
+        *ngIf="getFormArray('categories').length > 1"
         (click)="removeAtIdex(i, 'categories')"
       >
         x
@@ -120,5 +145,7 @@
     </div>
   </div>
 
-  <button class="btn btn-primary" type="submit">Save</button>
+  <button class="btn btn-primary" type="submit" [disabled]="!recipeForm.valid">
+    Save
+  </button>
 </form>

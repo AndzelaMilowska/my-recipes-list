@@ -1,5 +1,9 @@
 @import "../../../scss/variables.scss";
 
+// :host {
+//   width: 100%;
+// }
+
 .recipe__header-container {
   width: 100%;
   border-bottom: 2px solid $primary-color-01;
@@ -96,6 +100,7 @@
   & li {
     all: unset;
     display: inline-flex;
+    width: 100%;
   }
 
   & h3 {

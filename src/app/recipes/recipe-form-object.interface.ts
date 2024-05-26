@@ -1,13 +1,11 @@
 import { Ingredient } from './ingredient.interface';
 
-export interface Recipe {
+export interface RecipeForm {
   title: string;
-  imgs?: (string | File)[];
-  description: string;
-  ingredientsList: Ingredient[];
-
+  img?: string | File;
+  desctiption: string;
+  ingredients: Ingredient[];
   instructions: string[];
   categories?: string[];
   numberOfPortions: number;
-  id: number;
 }

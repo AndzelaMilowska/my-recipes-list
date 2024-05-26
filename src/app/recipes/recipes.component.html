@@ -8,7 +8,7 @@
     <div *ngIf="recipe.imgs" class="recipe-thumbnail__img-container">
       <img
         class="recipe-thumbnail__img rounded"
-        src="{{ recipe.imgs[0] }}"
+        src="{{ displayRecipeImg(recipe.imgs[0]) }}"
         alt=""
       />
     </div>

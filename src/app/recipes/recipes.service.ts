@@ -8,7 +8,6 @@ export class RecipesService {
       title: 'The perfect chips',
       imgs: [
         'https://img.jamieoliver.com/jamieoliver/recipe-database/oldImages/large/1292_1_1440773599.jpg?tr=w-800,h-1066',
-        // 'https://img.cuisineaz.com/660x660/2016/07/26/i32581-frites-a-la-poele.webp'
       ],
       description:
         '“Without question, the humble fried potato, the chip, is a gastronomic phenomenon in itself. The ability potatoes have to get mega crispy on the outside and super-fluffy in the middle when cooked is so good. Skinny and shoestring fries are delicious, but a proper fat handcut chip is something else. It’s just a shame that they’re not very good for you, but, like a good old cake, life wouldn’t be quite the same without them. At home, we don’t cook chips very often, so when we do have them, we definitely want the real deal. So let me tell you how I make the perfect chip – if you’re going to do it, do it right. ',
@@ -106,12 +105,31 @@ export class RecipesService {
     return [...this.recipeList];
   }
 
+  addRecipe(recipeObject: Recipe) {
+    this.recipeList.push(recipeObject);
+  }
+
   recipeById(index: number): Recipe {
     let foundRecipe = this.recipeList.find(({ id }) => id === index);
     if (foundRecipe != undefined) {
       return foundRecipe;
     } else {
       return this.emptyRecipe;
+    }
+  }
+
+  findAvailableIndex() {
+    const highestId = Math.max(...this.recipeList.map((object) => object.id));
+    return highestId + 1;
+  }
+
+  displayRecipeImg(img: string | File) {
+    if (typeof img === 'string') {
+      console.log(img);
+      return img;
+    } else {
+      console.log(URL.createObjectURL(img));
+      return URL.createObjectURL(img);
     }
   }
 }

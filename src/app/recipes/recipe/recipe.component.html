@@ -21,7 +21,7 @@
   <img
     *ngIf="activeRecipe.imgs"
     class="recipe__img"
-    src="{{ activeRecipe.imgs[0] }}"
+    src="{{ displayRecipeImg(activeRecipe.imgs[0]) }}"
     alt="recipe image"
   />
 </div>

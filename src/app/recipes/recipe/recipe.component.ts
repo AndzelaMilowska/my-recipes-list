@@ -31,7 +31,11 @@ export class RecipeComponent implements OnInit {
   increaseNumberOfPortions() {
     this.activeRecipe.numberOfPortions = this.activeRecipe.numberOfPortions + 1;
   }
+
+  displayRecipeImg(img: string | File) {
+    return typeof img === 'string' ? img : URL.createObjectURL(img);
+  }
 }
 
-//create another recipe edit for edditing and adding recipe
-//add WYSIWYG to recipe editor?? --> storing all text data, not just a string
+//wyświetlanie img tez w podgladzie wszystkich przepisów
+//style fix

@@ -19,4 +19,8 @@ export class RecipesComponent {
   onClick(recipeId: number) {
     this.router.navigate([`recipe/${recipeId}`]);
   }
+
+  displayRecipeImg(img: string | File) {
+    return typeof img === 'string' ? img : URL.createObjectURL(img);
+  }
 }
