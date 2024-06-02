@@ -17,10 +17,6 @@ export class UnitsService {
       shorthand: 'ml',
     },
     {
-      value: 'ml',
-      shorthand: 'ml',
-    },
-    {
       value: 'cup',
       shorthand: 'cup',
     },

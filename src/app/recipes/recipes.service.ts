@@ -93,7 +93,7 @@ export class RecipesService {
   ];
 
   private emptyRecipe: Recipe = {
-    title: 'nothing here',
+    title: 'title',
     description: '',
     ingredientsList: [{ amount: 0, name: '', unit: '' }],
     instructions: ['nothing here'],
@@ -109,6 +109,11 @@ export class RecipesService {
     this.recipeList.push(recipeObject);
   }
 
+  updateRecipe(id: number, updatedRecipe: Recipe) {
+    let recipeIndex = this.recipeList.findIndex((recipe) => recipe.id === id);
+    this.recipeList[recipeIndex] = updatedRecipe;
+  }
+
   recipeById(index: number): Recipe {
     let foundRecipe = this.recipeList.find(({ id }) => id === index);
     if (foundRecipe != undefined) {
@@ -121,15 +126,5 @@ export class RecipesService {
   findAvailableIndex() {
     const highestId = Math.max(...this.recipeList.map((object) => object.id));
     return highestId + 1;
-  }
-
-  displayRecipeImg(img: string | File) {
-    if (typeof img === 'string') {
-      console.log(img);
-      return img;
-    } else {
-      console.log(URL.createObjectURL(img));
-      return URL.createObjectURL(img);
-    }
   }
 }

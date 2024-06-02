@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RecipesService } from '../recipes.service';
 import { Recipe } from '../recipe.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe',
@@ -8,7 +9,10 @@ import { Recipe } from '../recipe.interface';
   styleUrl: './recipe.component.scss',
 })
 export class RecipeComponent implements OnInit {
-  constructor(private recipes: RecipesService) {}
+  constructor(
+    private recipes: RecipesService,
+    private router: Router,
+  ) {}
   @Input() id: string;
 
   activeRecipe: Recipe;
@@ -35,7 +39,10 @@ export class RecipeComponent implements OnInit {
   displayRecipeImg(img: string | File) {
     return typeof img === 'string' ? img : URL.createObjectURL(img);
   }
+
+  onEdit() {
+    this.router.navigate([`edit`], { queryParams: { id: this.id } });
+  }
 }
 
-//wyświetlanie img tez w podgladzie wszystkich przepisów
 //style fix

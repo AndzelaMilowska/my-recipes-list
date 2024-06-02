@@ -35,7 +35,11 @@
   </div>
   <!-- ingredients list -->
   <div formArrayName="ingredients">
-    <button class="btn btn-success" type="button" (click)="addIngredient()">
+    <button
+      class="btn btn-success"
+      type="button"
+      (click)="addIngredient('', 1, 'g')"
+    >
       +
     </button>
     <ul>
@@ -128,6 +132,7 @@
       "
     >
       <label for="categoryInput"></label>
+      <!-- keydown enter submits form occasionally -->
       <input
         id="categoryInput"
         type="text"

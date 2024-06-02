@@ -8,4 +8,5 @@ export interface RecipeForm {
   instructions: string[];
   categories?: string[];
   numberOfPortions: number;
+  id?: number;
 }

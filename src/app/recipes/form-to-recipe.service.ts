@@ -14,7 +14,9 @@ export class FormToRecipeService {
       ingredientsList: formValues.ingredients,
       instructions: formValues.instructions,
       numberOfPortions: formValues.numberOfPortions,
-      id: this.recipesService.findAvailableIndex(),
+      id: formValues.id
+        ? formValues.id
+        : this.recipesService.findAvailableIndex(),
     };
     if (formValues.img) {
       recipeObj.imgs = [formValues.img];
