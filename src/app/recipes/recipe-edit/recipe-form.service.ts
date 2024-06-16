@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from '../recipe.interface';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UnitsService } from '../../shared/units.service';
+import { Units } from '../../shared/units.enum';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeFormService {
-  unitsList = this.units.units;
-  constructor(private units: UnitsService) {}
+  unitsList = Units;
 
   createEmptyForm() {
     return new FormGroup({
@@ -17,7 +16,7 @@ export class RecipeFormService {
         new FormGroup({
           amount: new FormControl(1, Validators.required),
           name: new FormControl(null, Validators.required),
-          unit: new FormControl(this.unitsList[0].value),
+          unit: new FormControl(this.unitsList.Gram),
         }),
       ]),
       instructions: new FormArray([new FormControl(null, Validators.required)]),
@@ -75,10 +74,12 @@ export class RecipeFormService {
   }
 
   recreateRecipeForm(formObject: FormGroup, recipe: Recipe) {
-    formObject.patchValue({ title: recipe.title });
-    formObject.patchValue({ desctiption: recipe.description });
-    formObject.patchValue({ numberOfPortions: recipe.numberOfPortions });
-    formObject.patchValue({ id: recipe.id });
+    formObject.patchValue({
+      title: recipe.title,
+      desctiption: recipe.description,
+      numberOfPortions: recipe.numberOfPortions,
+      id: recipe.id,
+    });
     this.removeAtIdex(formObject, 0, 'ingredients');
     this.removeAtIdex(formObject, 0, 'instructions');
 
@@ -106,7 +107,7 @@ export class RecipeFormService {
       }
     }
 
-    if (recipe.imgs && typeof recipe.imgs[0] == 'string') {
+    if (recipe.imgs && typeof recipe.imgs[0] === 'string') {
       formObject.patchValue({ img: recipe.imgs[0] });
     }
   }

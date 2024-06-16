@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RecipesService } from './recipes.service';
 import { Router } from '@angular/router';
 import { Recipe } from './recipe.interface';
+import { AppRoutes } from '../shared/routes.enum';
 
 @Component({
   selector: 'app-recipes',
@@ -17,7 +18,7 @@ export class RecipesComponent {
   allRecipesList: Recipe[] = this.recipes.recipes;
 
   onClick(recipeId: number) {
-    this.router.navigate([`recipe/${recipeId}`]);
+    this.router.navigate([AppRoutes.Recipe + '/' + recipeId]);
   }
 
   displayRecipeImg(img: string | File) {

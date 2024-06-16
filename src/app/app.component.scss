@@ -4,6 +4,7 @@
   height: 100vh;
   overflow: scroll;
   position: relative;
+  width: 100%;
 }
 
 .testo {
@@ -14,4 +15,8 @@
   width: 100%;
   border: 2px solid $primary-color-01;
   margin: 1rem;
+}
+
+.app-body {
+  width: 100%;
 }

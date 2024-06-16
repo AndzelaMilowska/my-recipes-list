@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RecipesService } from '../recipes.service';
 import { Recipe } from '../recipe.interface';
 import { Router } from '@angular/router';
+import { AppRoutes } from '../../shared/routes.enum';
 
 @Component({
   selector: 'app-recipe',
@@ -17,7 +18,6 @@ export class RecipeComponent implements OnInit {
 
   activeRecipe: Recipe;
   initialPortions: number;
-
   ngOnInit(): void {
     if (this.id) {
       this.activeRecipe = this.recipes.recipeById(+this.id);
@@ -41,8 +41,6 @@ export class RecipeComponent implements OnInit {
   }
 
   onEdit() {
-    this.router.navigate([`edit`], { queryParams: { id: this.id } });
+    this.router.navigate([AppRoutes.Edit], { queryParams: { id: this.id } });
   }
 }
-
-//style fix

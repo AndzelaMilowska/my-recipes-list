@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from './recipe.interface';
+import { emptyRecipe } from './empty-recipe.constants';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesService {
@@ -90,16 +91,28 @@ export class RecipesService {
       categories: ['Breakfast', 'Healthy'],
       id: 3,
     },
+    {
+      title: 'Short One',
+      description: 'Aaaa',
+      ingredientsList: [{ amount: 10, name: 'Salt', unit: 'g' }],
+      instructions: ['aaa'],
+      numberOfPortions: 4,
+      categories: ['Breakfast', 'Healthy'],
+      id: 4,
+    },
+    {
+      title: 'Wide One',
+      imgs: [
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbn16lnFBzhCCqEZgNvOUH52asJIRv5QoROw&s',
+      ],
+      description: 'Aaaa',
+      ingredientsList: [{ amount: 10, name: 'Salt', unit: 'g' }],
+      instructions: ['aaa'],
+      numberOfPortions: 4,
+      categories: ['Breakfast', 'Healthy'],
+      id: 5,
+    },
   ];
-
-  private emptyRecipe: Recipe = {
-    title: 'title',
-    description: '',
-    ingredientsList: [{ amount: 0, name: '', unit: '' }],
-    instructions: ['nothing here'],
-    numberOfPortions: 0,
-    id: 0,
-  };
 
   get recipes() {
     return [...this.recipeList];
@@ -111,6 +124,9 @@ export class RecipesService {
 
   updateRecipe(id: number, updatedRecipe: Recipe) {
     let recipeIndex = this.recipeList.findIndex((recipe) => recipe.id === id);
+    if (recipeIndex === -1) {
+      return;
+    }
     this.recipeList[recipeIndex] = updatedRecipe;
   }
 
@@ -119,7 +135,7 @@ export class RecipesService {
     if (foundRecipe != undefined) {
       return foundRecipe;
     } else {
-      return this.emptyRecipe;
+      return emptyRecipe;
     }
   }
 

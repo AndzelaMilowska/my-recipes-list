@@ -1,11 +1,14 @@
 <div class="recipe-thumbnail__container">
   <div
-    class="recipe-thumbnail col-4 rounded"
+    class="recipe-thumbnail col rounded"
     *ngFor="let recipe of allRecipesList"
     (click)="onClick(recipe.id)"
   >
     <h3>{{ recipe.title }}</h3>
-    <div *ngIf="recipe.imgs" class="recipe-thumbnail__img-container">
+    <div
+      *ngIf="recipe.imgs && recipe.imgs?.length"
+      class="recipe-thumbnail__img-container"
+    >
       <img
         class="recipe-thumbnail__img rounded"
         src="{{ displayRecipeImg(recipe.imgs[0]) }}"

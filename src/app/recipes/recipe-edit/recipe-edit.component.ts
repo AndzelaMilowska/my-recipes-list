@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UnitsService } from '../../shared/units.service';
+import { FormArray, FormGroup } from '@angular/forms';
+import { Units } from '../../shared/units.enum';
 import { FormToRecipeService } from '../form-to-recipe.service';
 import { RecipesService } from '../recipes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../recipe.interface';
 import { RecipeFormService } from './recipe-form.service';
+import { AppRoutes } from '../../shared/routes.enum';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -14,14 +15,13 @@ import { RecipeFormService } from './recipe-form.service';
 })
 export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
-  unitsList = this.units.units;
+  unitsList = Units;
   imagePreview: string;
   id: number | null = this.route.snapshot.queryParams['id']
     ? +this.route.snapshot.queryParams['id']
     : null;
   loadedRecipe: Recipe | null;
   constructor(
-    private units: UnitsService,
     private formToRecipe: FormToRecipeService,
     private recipesService: RecipesService,
     private route: ActivatedRoute,
@@ -31,50 +31,55 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.recipeForm = this.form.createEmptyForm();
-    if (this.id) {
-      this.loadedRecipe = this.recipesService.recipeById(this.id);
-      this.form.recreateRecipeForm(this.recipeForm, this.loadedRecipe);
-    }
-
-    if (
-      this.loadedRecipe &&
-      this.loadedRecipe.imgs &&
-      typeof this.loadedRecipe.imgs[0] == 'string'
-    ) {
-      this.imagePreview = this.loadedRecipe.imgs[0];
-    }
+    this.loadRecipe();
+    this.updateImagePreview();
   }
 
-  addIngredient(name: string, amount: number, unit: string) {
+  loadRecipe(): void {
+    if (!this.id) return;
+    this.loadedRecipe = this.recipesService.recipeById(this.id);
+    this.form.recreateRecipeForm(this.recipeForm, this.loadedRecipe);
+  }
+
+  updateImagePreview(): void {
+    if (
+      !this.loadedRecipe?.imgs?.length ||
+      typeof this.loadedRecipe.imgs[0] !== 'string'
+    ) {
+      return;
+    }
+    this.imagePreview = this.loadedRecipe.imgs[0];
+  }
+
+  addIngredient(name: string, amount: number, unit: string): void {
     this.form.addIngredient(this.recipeForm, name, amount, unit);
   }
 
-  getFormArray(formArrayName: string) {
+  getFormArray(formArrayName: string): FormArray {
     return this.form.getFormArray(this.recipeForm, formArrayName);
   }
 
-  addControl(formArray: FormArray) {
+  addControl(formArray: FormArray): void {
     this.form.addControl(formArray);
   }
 
-  removeAtIdex(index: number, arrayName: string) {
+  removeAtIdex(index: number, arrayName: string): void {
     this.form.removeAtIdex(this.recipeForm, index, arrayName);
   }
 
-  addControlToArrayByLastElement(i: number, arrayName: string) {
+  addControlToArrayByLastElement(i: number, arrayName: string): void {
     this.form.addControlToArrayByLastElement(this.recipeForm, i, arrayName);
   }
 
   updatePreviewImg(event: Event): void {
     const element = event.currentTarget as HTMLInputElement;
     let file: File | null = element.files ? element.files[0] : null;
-    if (file) {
-      this.imagePreview = URL.createObjectURL(file);
-      this.recipeForm.patchValue({ img: URL.createObjectURL(file) });
-    }
+    if (!file) return;
+    this.imagePreview = URL.createObjectURL(file);
+    this.recipeForm.patchValue({ img: URL.createObjectURL(file) });
   }
 
-  saveRecipe() {
+  saveRecipe(): void {
     let recipeObject = this.formToRecipe.convertFormToRecipe(
       this.recipeForm.value,
     );
@@ -85,8 +90,7 @@ export class RecipeEditComponent implements OnInit {
       this.recipesService.addRecipe(recipeObject);
     }
 
-    this.router.navigate(['recipes']);
-    console.log(recipeObject);
+    this.router.navigate([AppRoutes.Recipe + '/' + recipeObject.id]);
   }
 }
 

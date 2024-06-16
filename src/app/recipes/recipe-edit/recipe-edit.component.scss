@@ -1,0 +1,224 @@
+@import "../../../scss/variables.scss";
+@import "../../../scss/mixins.scss";
+
+.header-container {
+  @include header-container;
+
+  input {
+    all: unset;
+    padding-left: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.submit-button {
+  @include button-01;
+  background-color: $secondary-color-01;
+
+  &:disabled {
+    background-color: $secondary-color-02;
+  }
+}
+
+.description-container {
+  @include row-01;
+  position: relative;
+  padding: 0 0.5rem;
+
+  & > * {
+    @include column-01;
+  }
+
+  &__input {
+    @include border-radius-01;
+    min-height: 5rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    height: 100%;
+  }
+
+  &__image-input {
+    @include border-radius-01;
+    position: absolute;
+    display: flex;
+    bottom: 1rem;
+    right: 1rem;
+    text-align: right;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: $white_0_25;
+
+    input {
+      width: 125px;
+      color: transparent;
+      overflow: hidden;
+
+      &::file-selector-button {
+        @include button-01;
+        @include border-radius-01;
+        position: static;
+        background-color: $secondary-color-01;
+        color: transparent;
+      }
+    }
+
+    label {
+      color: $white;
+      position: absolute;
+      cursor: pointer;
+      right: 1.4rem;
+      top: 0.7rem;
+    }
+  }
+
+  &__image {
+    border-radius: 1rem;
+    max-width: 50%;
+    object-fit: cover;
+  }
+}
+
+.recipe-body {
+  display: inline-flex;
+  width: 100%;
+  position: relative;
+}
+
+.instruction__remove-button {
+  height: auto;
+}
+
+.ingredients-container {
+  border-right: $border-01;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0 1rem;
+
+  ul {
+    all: unset;
+
+    li {
+      list-style: none;
+      border-bottom: $border-01;
+      position: relative;
+    }
+  }
+}
+
+.list__add-button {
+  @include button-01;
+  position: static;
+  background-color: $secondary-color-01;
+  text-align: center;
+  margin-bottom: 1rem;
+
+  &:hover {
+    background-color: $secondary-color-03;
+  }
+}
+
+.list__remove-button {
+  all: unset;
+  color: $primary-color-01;
+  height: 100%;
+  position: absolute;
+  right: -0.75rem;
+}
+
+.ingredient {
+  width: 100%;
+  display: inline-flex;
+
+  &__quantity {
+    all: unset;
+    width: 3rem;
+  }
+
+  &__name {
+    all: unset;
+    width: 100%;
+  }
+
+  &__unit {
+    border: none;
+    cursor: pointer;
+    width: 4rem;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.recipe-method {
+  border-right: $border-01;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0 1rem;
+  border: none;
+
+  &__input {
+    min-height: auto;
+    width: 100%;
+    max-height: 10rem;
+  }
+
+  ol {
+    all: unset;
+    counter-reset: item;
+  }
+
+  li {
+    all: unset;
+    padding: 0.5rem 0;
+    display: inline-flex;
+    width: 100%;
+    position: relative;
+    border-bottom: $border-01;
+    counter-increment: item;
+    align-items: center;
+  }
+
+  li::before {
+    content: counter(item);
+    margin-right: 0.5rem;
+    font-size: calc(1.3rem + 0.6vw);
+  }
+}
+
+.categories__container {
+  @include border-01;
+  display: inline-flex;
+  width: -webkit-fill-available;
+  padding: 0.5rem;
+  box-sizing: content-box;
+  margin: 1rem;
+  flex-wrap: wrap;
+}
+
+.category {
+  display: inline-flex;
+  background: $secondary-color-01;
+  color: $white;
+  padding-left: 0.5rem;
+  margin: 0.5rem;
+
+  input {
+    all: unset;
+    width: 7rem;
+  }
+
+  .list__remove-button {
+    position: static;
+    width: 2rem;
+    text-align: center;
+    color: white;
+    background-color: $white_0_25;
+
+    &:hover {
+      color: $primary-color-01;
+    }
+  }
+}

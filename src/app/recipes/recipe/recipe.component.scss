@@ -1,14 +1,8 @@
 @import "../../../scss/variables.scss";
-
-// :host {
-//   width: 100%;
-// }
+@import "../../../scss/mixins.scss";
 
 .recipe__header-container {
-  width: 100%;
-  border-bottom: 2px solid $primary-color-01;
-  margin: 1rem 0;
-  padding: 0.5rem 0;
+  @include header-container;
 }
 
 .recipe__header {
@@ -33,20 +27,19 @@
 }
 
 .recipe__edit-button {
-  all: unset;
-  position: absolute;
-  top: 0;
-  right: 2rem;
+  @include button-01;
   background-color: $secondary-color-01;
-  padding: 0.25rem 1rem;
-  color: $white;
 }
 
 .recipe__description-container {
+  @include row-01;
   padding: 1rem;
-  display: inline-flex;
   & > * {
-    padding: 0.5rem;
+    @include column-01;
+  }
+  p {
+    word-break: break-word;
+    overflow: hidden;
   }
 }
 
@@ -62,7 +55,7 @@
 }
 
 .recipe__ingredients-container {
-  border-right: 2px solid $primary-color-01;
+  border-right: $border-01;
 
   & ul {
     padding-left: 1rem;
@@ -73,7 +66,7 @@
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid $primary-color-01;
+  border-bottom: $border-01;
   margin-bottom: 1rem;
   flex-wrap: wrap;
   padding-bottom: 0.5rem;
@@ -99,8 +92,7 @@
 
   & li {
     all: unset;
-    display: inline-flex;
-    width: 100%;
+    @include row-01;
   }
 
   & h3 {

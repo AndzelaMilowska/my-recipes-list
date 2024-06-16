@@ -1,131 +1,163 @@
 <form [formGroup]="recipeForm" (ngSubmit)="saveRecipe()">
-  <div>
-    <label for="title"></label>
-    <input
-      id="title"
-      type="text"
-      formControlName="title"
-      placeholder="Recipe Title"
-    />
+  <div class="header-container">
+    <h1>
+      <label for="title"></label>
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="Recipe Title.."
+      />
+    </h1>
+    <button
+      class="submit-button rounded"
+      type="submit"
+      [disabled]="!recipeForm.valid"
+    >
+      Save
+    </button>
   </div>
 
-  <div>
-    <label for="desctiption"></label>
-    <input
-      id="desctiption"
-      type="text"
-      formControlName="desctiption"
-      placeholder="Recipe desctiption"
-    />
-  </div>
-  <div>
-    <label for="image">Recipe image</label>
-    <input
-      type="file"
-      id="image"
-      accept="image/png, image/jpeg"
-      (change)="updatePreviewImg($event)"
-    />
+  <div class="description-container">
+    <div class="col">
+      <label for="desctiption"></label>
+      <textarea
+        class="description-container__input"
+        id="desctiption"
+        type="text"
+        formControlName="desctiption"
+        placeholder="Recipe desctiption"
+      >
+      </textarea>
+    </div>
+
+    <div class="description-container__image-input">
+      <label for="image">Recipe image</label>
+      <input
+        type="file"
+        id="image"
+        accept="image/png, image/jpeg"
+        (change)="updatePreviewImg($event)"
+        title="uh "
+      />
+    </div>
     <img
+      class="col description-container__image"
       [src]="imagePreview"
       alt="Recipe image"
       width="250"
       *ngIf="imagePreview"
     />
   </div>
-  <!-- ingredients list -->
-  <div formArrayName="ingredients">
-    <button
-      class="btn btn-success"
-      type="button"
-      (click)="addIngredient('', 1, 'g')"
-    >
-      +
-    </button>
-    <ul>
-      <li
-        *ngFor="
-          let ingredient of getFormArray('ingredients').controls;
-          let i = index
-        "
-      >
-        <div [formGroup]="$any(ingredient)">
-          <label for="{{ 'ingredient_' + i }}"></label>
-          <input
-            id="{{ 'ingredient_' + i }}"
-            type="text"
-            formControlName="name"
-            placeholder="Add ingredient"
-          />
-          <label for="{{ 'ingredientQuantity_' + i }}"></label>
-          <input
-            id="{{ 'ingredientQuantity_' + i }}"
-            type="number"
-            min="1"
-            formControlName="amount"
-          />
 
-          <label for="{{ 'quantityUnit_' + i }}"></label>
-          <select
-            id="{{ 'quantityUnit_' + i }}"
-            type="number"
-            min="1"
-            formControlName="unit"
+  <div class="recipe-body">
+    <!-- ingredients list -->
+    <div class="ingredients-container col-5" formArrayName="ingredients">
+      <button
+        class="ingredients-container__add-button list__add-button rounded"
+        type="button"
+        (click)="addIngredient('', 1, 'g')"
+      >
+        Add Ingredient
+      </button>
+      <ul>
+        <li
+          *ngFor="
+            let ingredient of getFormArray('ingredients').controls;
+            let i = index
+          "
+        >
+          <div [formGroup]="$any(ingredient)" class="ingredient list__element">
+            <label for="{{ 'ingredient_' + i }}"></label>
+            <input
+              class="ingredient__name"
+              id="{{ 'ingredient_' + i }}"
+              type="text"
+              formControlName="name"
+              placeholder="Add ingredient"
+            />
+            <label for="{{ 'ingredientQuantity_' + i }}"></label>
+            <input
+              class="ingredient__quantity"
+              id="{{ 'ingredientQuantity_' + i }}"
+              type="number"
+              min="1"
+              formControlName="amount"
+            />
+
+            <label for="{{ 'quantityUnit_' + i }}"></label>
+            <select
+              class="ingredient__unit"
+              id="{{ 'quantityUnit_' + i }}"
+              type="number"
+              min="1"
+              formControlName="unit"
+            >
+              <option
+                *ngFor="let unit of unitsList | keyvalue"
+                [value]="unit.value"
+              >
+                {{ unit.value }}
+              </option>
+            </select>
+            <button
+              class="ingredient__remove-button list__remove-button"
+              type="button"
+              *ngIf="getFormArray('ingredients').length > 1"
+              (click)="removeAtIdex(i, 'ingredients')"
+            >
+              x
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- instructions list -->
+    <div
+      class="recipe-method list__container col-7"
+      formArrayName="instructions"
+    >
+      <button
+        class="recipe-method__add-button list__add-button rounded"
+        type="button"
+        (click)="addControl(getFormArray('instructions'))"
+      >
+        Add step
+      </button>
+      <ol>
+        <li
+          class="list__element"
+          *ngFor="
+            let instruction of getFormArray('instructions').controls;
+            let i = index
+          "
+        >
+          <label for="instruction_{{ i }}"></label>
+          <textarea
+            rows="3"
+            class="recipe-method__input"
+            id="instruction_{{ i }}"
+            [formControlName]="i"
+            placeholder="Enter next step.."
           >
-            <option *ngFor="let unit of unitsList" [value]="unit.value">
-              {{ unit.shorthand }}
-            </option>
-          </select>
+          </textarea>
           <button
-            class="btn btn-danger"
+            class="instruction__remove-button list__remove-button"
             type="button"
-            *ngIf="getFormArray('ingredients').length > 1"
-            (click)="removeAtIdex(i, 'ingredients')"
+            *ngIf="getFormArray('instructions').length > 1"
+            (click)="removeAtIdex(i, 'instructions')"
           >
             x
           </button>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ol>
+    </div>
   </div>
 
-  <!-- instructions list -->
-  <div formArrayName="instructions">
-    <button
-      class="btn btn-success"
-      type="button"
-      (click)="addControl(getFormArray('instructions'))"
-    >
-      +
-    </button>
-    <ol>
-      <li
-        *ngFor="
-          let instruction of getFormArray('instructions').controls;
-          let i = index
-        "
-      >
-        <label for="instruction_{{ i }}"></label>
-        <input
-          id="instruction_{{ i }}"
-          type="text"
-          [formControlName]="i"
-          placeholder="Enter next step.."
-        />
-        <button
-          class="btn btn-danger"
-          type="button"
-          *ngIf="getFormArray('instructions').length > 1"
-          (click)="removeAtIdex(i, 'instructions')"
-        >
-          x
-        </button>
-      </li>
-    </ol>
-  </div>
-
-  <div formArrayName="categories">
+  <div class="categories__container rounded" formArrayName="categories">
     <div
+      class="category rounded"
       *ngFor="
         let categories of getFormArray('categories').controls;
         let i = index
@@ -141,6 +173,7 @@
         (keydown.enter)="addControlToArrayByLastElement(i, 'categories')"
       />
       <button
+        class="list__remove-button"
         type="button"
         *ngIf="getFormArray('categories').length > 1"
         (click)="removeAtIdex(i, 'categories')"
@@ -149,8 +182,4 @@
       </button>
     </div>
   </div>
-
-  <button class="btn btn-primary" type="submit" [disabled]="!recipeForm.valid">
-    Save
-  </button>
 </form>

@@ -19,7 +19,7 @@
 <div class="recipe__description-container">
   <p>{{ activeRecipe.description }}</p>
   <img
-    *ngIf="activeRecipe.imgs"
+    *ngIf="activeRecipe.imgs && activeRecipe.imgs.length"
     class="recipe__img"
     src="{{ displayRecipeImg(activeRecipe.imgs[0]) }}"
     alt="recipe image"

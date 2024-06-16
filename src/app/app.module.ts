@@ -2,25 +2,22 @@ import { NgModule } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { RecipesComponent } from './recipes/recipes.component';
-import { LoginComponent } from './http/login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { AppComponent } from './app.component';
-import { RecipeComponent } from './recipes/recipe/recipe.component';
-import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { RecipesModule } from './recipes/recipes.module';
+import { NavbarModule } from './shared/navbar/navbar.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    RecipesComponent,
-    LoginComponent,
-    RecipeComponent,
-    RecipeEditComponent,
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    RouterOutlet,
+    AppRoutingModule,
+    RecipesModule,
+    NavbarModule,
+    AuthModule,
   ],
-  imports: [BrowserModule, RouterOutlet, AppRoutingModule, ReactiveFormsModule],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
