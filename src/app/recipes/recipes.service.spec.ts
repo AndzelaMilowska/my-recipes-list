@@ -1,49 +1,82 @@
 import { TestBed } from '@angular/core/testing';
 import { RecipesService } from './recipes.service';
 import { Recipe } from './recipe.interface';
+import { emptyRecipe } from './empty-recipe.constants';
 
 describe('DataService', () => {
   let service: RecipesService;
-  let testRecipeObject: Recipe = {
-    title: 'title',
-    description: 'description',
-    ingredientsList: [{ amount: 1, name: 'name', unit: 'unit' }],
-    instructions: ['instructions'],
-    numberOfPortions: 2,
-    id: 1,
-  };
+  let testRecipeObject: Recipe;
+  let recipesTestArray: Recipe[];
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(RecipesService);
+    testRecipeObject = {
+      title: 'new title',
+      description: 'new description',
+      ingredientsList: [{ amount: 1, name: 'new name', unit: 'new unit' }],
+      instructions: ['new instructions'],
+      numberOfPortions: 2,
+      id: 1,
+    };
+    recipesTestArray = [
+      {
+        title: 'title01',
+        description: 'description01',
+        ingredientsList: [{ amount: 1, name: 'name01', unit: 'unit01' }],
+        instructions: ['instructions01'],
+        numberOfPortions: 2,
+        id: 1,
+      },
+      {
+        title: 'title02',
+        description: 'description02',
+        ingredientsList: [{ amount: 1, name: 'name02', unit: 'unit02' }],
+        instructions: ['instructions02'],
+        numberOfPortions: 2,
+        id: 2,
+      },
+    ];
   });
 
   it('Service should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  //are tests working?
-  it('should be something', () => {
-    expect(true).toBeTruthy();
-  });
-
-  //add recipe
+  //addRecipe
   it('should add one to length', () => {
-    let initialLength = service.recipes.length;
-    service.addRecipe(testRecipeObject);
-    expect(service.recipes.length).toBe(initialLength + 1);
+    service.addRecipe(testRecipeObject, recipesTestArray);
+    expect(recipesTestArray.length).toBe(3);
   });
 
-  //   updateRecipe(id: number, updatedRecipe: Recipe) {
-  //     let recipeIndex = this.recipeList.findIndex((recipe) => recipe.id === id);
-  //     if (recipeIndex === -1) {
-  //       return
-  //     }
-  //     this.recipeList[recipeIndex] = updatedRecipe;
-  //   }
+  // updateRecipe
   it('should update object', () => {
-    let objectIndex = service.recipes.findIndex((object) => object.id === 1);
-    service.updateRecipe(1, testRecipeObject);
-    expect(service.recipes[objectIndex]).toBe(testRecipeObject);
+    service.updateRecipe(testRecipeObject, recipesTestArray);
+    expect(recipesTestArray[0]).toBe(testRecipeObject);
+  });
+
+  it("shouldn't update if id doesn't match", () => {
+    testRecipeObject.id = -1;
+    service.updateRecipe(testRecipeObject, recipesTestArray);
+    expect(recipesTestArray.length).toBe(2);
+  });
+
+  //recipeById
+  it('should return recipe with given id', () => {
+    expect(service.recipeById(2, recipesTestArray)).toBe(recipesTestArray[1]);
+  });
+
+  it('should return empty recipe', () => {
+    expect(service.recipeById(5, recipesTestArray)).toBe(emptyRecipe);
+  });
+
+  it('index should match', () => {
+    let result = service.recipeById(1, recipesTestArray);
+    expect(result.id).toBe(1);
+  });
+
+  //findAvailableIndex
+  it('should return first available value for recipe id (3)', () => {
+    expect(service.findAvailableIndex(recipesTestArray)).toBe(3);
   });
 });

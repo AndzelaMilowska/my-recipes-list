@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../recipe.interface';
 import { RecipeFormService } from './recipe-form.service';
 import { AppRoutes } from '../../shared/routes.enum';
+import { recipeList } from '../recipes-list.mocks';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -37,7 +38,7 @@ export class RecipeEditComponent implements OnInit {
 
   loadRecipe(): void {
     if (!this.id) return;
-    this.loadedRecipe = this.recipesService.recipeById(this.id);
+    this.loadedRecipe = this.recipesService.recipeById(this.id, recipeList);
     this.form.recreateRecipeForm(this.recipeForm, this.loadedRecipe);
   }
 
@@ -80,17 +81,20 @@ export class RecipeEditComponent implements OnInit {
   }
 
   saveRecipe(): void {
-    let recipeObject = this.formToRecipe.convertFormToRecipe(
-      this.recipeForm.value,
-    );
-
     if (this.id) {
-      this.recipesService.updateRecipe(this.id, recipeObject);
+      this.recipesService.updateRecipe(
+        this.formToRecipe.convertFormToRecipe(this.recipeForm.value, this.id),
+        recipeList,
+      );
     } else {
-      this.recipesService.addRecipe(recipeObject);
+      this.id = this.recipesService.findAvailableIndex(recipeList);
+      this.recipesService.addRecipe(
+        this.formToRecipe.convertFormToRecipe(this.recipeForm.value, this.id),
+        recipeList,
+      );
     }
 
-    this.router.navigate([AppRoutes.Recipe + '/' + recipeObject.id]);
+    this.router.navigate([AppRoutes.Recipe + '/' + this.id]);
   }
 }
 

@@ -7,7 +7,7 @@ import { RecipesService } from './recipes.service';
 export class FormToRecipeService {
   constructor(private recipesService: RecipesService) {}
 
-  convertFormToRecipe(formValues: RecipeForm): Recipe {
+  convertFormToRecipe(formValues: RecipeForm, index: number): Recipe {
     const {
       title,
       img,
@@ -24,7 +24,8 @@ export class FormToRecipeService {
       ingredientsList: ingredients,
       instructions: instructions,
       numberOfPortions: numberOfPortions,
-      id: id ? id : this.recipesService.findAvailableIndex(),
+      // id: id ? id : this.recipesService.findAvailableIndex(recipeArray),
+      id: index,
       imgs: img ? [img] : [],
       categories: categories?.length ? categories : [],
     };
