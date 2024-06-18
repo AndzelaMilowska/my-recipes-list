@@ -44,3 +44,9 @@ Thumbs.db
 
 # .prettierignore
 # .prettierrc.json
+
+#firebase setup
+.firebase/
+.firebaserc
+database.rules.json
+firebase.json
