@@ -1,17 +1,18 @@
 @import "../scss/variables.scss";
 
 :host {
-  height: 100vh;
+  height: $constant-vh-01;
   overflow: scroll;
   position: relative;
-}
-
-.testo {
-  height: 100rem;
+  width: 100%;
 }
 
 .content-container {
   width: 100%;
-  border: 2px solid $primary-color-01;
-  margin: 1rem;
+  border: $border-01;
+  margin: $constant-01;
+}
+
+.app-body {
+  width: 100%;
 }

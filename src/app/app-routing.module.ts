@@ -1,15 +1,16 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { LoginComponent } from './http/login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { RecipeComponent } from './recipes/recipe/recipe.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { AppRoutes } from './shared/routes.enum';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'recipes', component: RecipesComponent },
-  { path: 'recipe/:id', component: RecipeComponent },
-  { path: 'edit', component: RecipeEditComponent },
+  { path: AppRoutes.Login, component: LoginComponent },
+  { path: AppRoutes.Recipes, component: RecipesComponent },
+  { path: AppRoutes.Recipe + '/:id', component: RecipeComponent },
+  { path: AppRoutes.Edit, component: RecipeEditComponent },
 ];
 
 @NgModule({

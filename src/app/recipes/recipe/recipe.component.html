@@ -12,16 +12,16 @@
   </div>
 
   <!-- Edit Button -->
-  <button class="recipe__edit-button rounded">Edit</button>
+  <button class="recipe__edit-button rounded" (click)="onEdit()">Edit</button>
 </div>
 
 <!-- Imgs  and Description-->
 <div class="recipe__description-container">
   <p>{{ activeRecipe.description }}</p>
   <img
-    *ngIf="activeRecipe.imgs"
+    *ngIf="activeRecipe.imgs && activeRecipe.imgs.length"
     class="recipe__img"
-    src="{{ activeRecipe.imgs[0] }}"
+    src="{{ displayRecipeImg(activeRecipe.imgs[0]) }}"
     alt="recipe image"
   />
 </div>

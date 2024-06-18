@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RecipesService } from '../recipes.service';
 import { Recipe } from '../recipe.interface';
+import { Router } from '@angular/router';
+import { AppRoutes } from '../../shared/routes.enum';
+import { recipeList } from '../recipes-list.mocks';
 
 @Component({
   selector: 'app-recipe',
@@ -8,15 +11,17 @@ import { Recipe } from '../recipe.interface';
   styleUrl: './recipe.component.scss',
 })
 export class RecipeComponent implements OnInit {
-  constructor(private recipes: RecipesService) {}
+  constructor(
+    private recipes: RecipesService,
+    private router: Router,
+  ) {}
   @Input() id: string;
 
   activeRecipe: Recipe;
   initialPortions: number;
-
   ngOnInit(): void {
     if (this.id) {
-      this.activeRecipe = this.recipes.recipeById(+this.id);
+      this.activeRecipe = this.recipes.recipeById(+this.id, recipeList);
       this.initialPortions = this.activeRecipe.numberOfPortions;
     }
   }
@@ -31,7 +36,12 @@ export class RecipeComponent implements OnInit {
   increaseNumberOfPortions() {
     this.activeRecipe.numberOfPortions = this.activeRecipe.numberOfPortions + 1;
   }
-}
 
-//create another recipe edit for edditing and adding recipe
-//add WYSIWYG to recipe editor?? --> storing all text data, not just a string
+  displayRecipeImg(img: string | File) {
+    return typeof img === 'string' ? img : URL.createObjectURL(img);
+  }
+
+  onEdit() {
+    this.router.navigate([AppRoutes.Edit], { queryParams: { id: this.id } });
+  }
+}

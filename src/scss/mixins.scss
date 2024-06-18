@@ -1,8 +1,46 @@
 @import "./variables.scss";
 
-@mixin border-01 {
-  border: 2px solid $primary-color-01;
+@mixin fill {
+  width: 100%;
+  height: 100%;
 }
-@mixin border-02 {
-  border: 2px solid $white;
+
+@mixin header-container {
+  width: 100%;
+  border-bottom: 2px solid $primary-color-01;
+  margin: 1rem 0;
+  padding: 0.5rem 0;
+}
+
+@mixin button-01 {
+  all: unset;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  padding: 0.25rem 1rem;
+  color: $white;
+  cursor: pointer;
+}
+
+@mixin column-01 {
+  padding: 0.5rem;
+  min-width: 45%;
+  max-width: 100%;
+}
+
+@mixin row-01 {
+  display: inline-flex;
+  width: 100%;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin container-01 {
+  @include flex-column;
+  padding: $constant-01;
+  border-right: $border-01;
+  align-items: stretch;
 }
