@@ -9,7 +9,6 @@ export class RecipesService {
   }
 
   updateRecipe(updatedRecipe: Recipe, recipeArray: Recipe[]) {
-    console.log('inputId: ' + updatedRecipe.id);
     let recipeIndex = recipeArray.findIndex(
       (recipe) => recipe.id === updatedRecipe.id,
     );

@@ -10,7 +10,7 @@ export class RecipeFormService {
   createEmptyForm() {
     return new FormGroup({
       title: new FormControl(null, Validators.required),
-      desctiption: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
       img: new FormControl(null),
       ingredients: new FormArray([
         new FormGroup({
@@ -49,7 +49,7 @@ export class RecipeFormService {
     (<FormArray>formArray).push(control);
   }
 
-  removeAtIdex(formObject: FormGroup, index: number, arrayName: string) {
+  removeAtIndex(formObject: FormGroup, index: number, arrayName: string) {
     (<FormArray>formObject.get(arrayName)).removeAt(index);
   }
 
@@ -76,12 +76,12 @@ export class RecipeFormService {
   recreateRecipeForm(formObject: FormGroup, recipe: Recipe) {
     formObject.patchValue({
       title: recipe.title,
-      desctiption: recipe.description,
+      description: recipe.description,
       numberOfPortions: recipe.numberOfPortions,
       id: recipe.id,
     });
-    this.removeAtIdex(formObject, 0, 'ingredients');
-    this.removeAtIdex(formObject, 0, 'instructions');
+    this.removeAtIndex(formObject, 0, 'ingredients');
+    this.removeAtIndex(formObject, 0, 'instructions');
 
     for (let ingredient of recipe.ingredientsList) {
       this.addIngredient(
@@ -99,7 +99,7 @@ export class RecipeFormService {
     }
 
     if (recipe.categories) {
-      this.removeAtIdex(formObject, 0, 'categories');
+      this.removeAtIndex(formObject, 0, 'categories');
       for (let category of recipe.categories) {
         this.getFormArray(formObject, 'categories').push(
           new FormControl(category, Validators.required),

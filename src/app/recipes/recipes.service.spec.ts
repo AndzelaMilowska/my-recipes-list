@@ -43,14 +43,12 @@ describe('DataService', () => {
     expect(service).toBeTruthy();
   });
 
-  //addRecipe
   it('should add one to length', () => {
     service.addRecipe(testRecipeObject, recipesTestArray);
     expect(recipesTestArray.length).toBe(3);
   });
 
-  // updateRecipe
-  it('should update object', () => {
+  it('should update recipe', () => {
     service.updateRecipe(testRecipeObject, recipesTestArray);
     expect(recipesTestArray[0]).toBe(testRecipeObject);
   });
@@ -61,7 +59,6 @@ describe('DataService', () => {
     expect(recipesTestArray.length).toBe(2);
   });
 
-  //recipeById
   it('should return recipe with given id', () => {
     expect(service.recipeById(2, recipesTestArray)).toBe(recipesTestArray[1]);
   });
@@ -75,7 +72,6 @@ describe('DataService', () => {
     expect(result.id).toBe(1);
   });
 
-  //findAvailableIndex
   it('should return first available value for recipe id (3)', () => {
     expect(service.findAvailableIndex(recipesTestArray)).toBe(3);
   });

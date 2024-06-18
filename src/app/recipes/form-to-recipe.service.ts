@@ -11,7 +11,7 @@ export class FormToRecipeService {
     const {
       title,
       img,
-      desctiption,
+      description,
       ingredients,
       instructions,
       categories,
@@ -19,12 +19,11 @@ export class FormToRecipeService {
       id,
     } = formValues;
     return {
-      title: title,
-      description: desctiption,
+      title,
+      description,
       ingredientsList: ingredients,
-      instructions: instructions,
-      numberOfPortions: numberOfPortions,
-      // id: id ? id : this.recipesService.findAvailableIndex(recipeArray),
+      instructions,
+      numberOfPortions,
       id: index,
       imgs: img ? [img] : [],
       categories: categories?.length ? categories : [],

@@ -20,13 +20,13 @@
 
   <div class="description-container">
     <div class="col">
-      <label for="desctiption"></label>
+      <label for="description"></label>
       <textarea
         class="description-container__input"
-        id="desctiption"
+        id="description"
         type="text"
-        formControlName="desctiption"
-        placeholder="Recipe desctiption"
+        formControlName="description"
+        placeholder="Recipe description"
       >
       </textarea>
     </div>
@@ -38,7 +38,7 @@
         id="image"
         accept="image/png, image/jpeg"
         (change)="updatePreviewImg($event)"
-        title="uh "
+        title="recipe image"
       />
     </div>
     <img
@@ -104,7 +104,7 @@
               class="ingredient__remove-button list__remove-button"
               type="button"
               *ngIf="getFormArray('ingredients').length > 1"
-              (click)="removeAtIdex(i, 'ingredients')"
+              (click)="removeAtIndex(i, 'ingredients')"
             >
               x
             </button>
@@ -146,7 +146,7 @@
             class="instruction__remove-button list__remove-button"
             type="button"
             *ngIf="getFormArray('instructions').length > 1"
-            (click)="removeAtIdex(i, 'instructions')"
+            (click)="removeAtIndex(i, 'instructions')"
           >
             x
           </button>
@@ -176,7 +176,7 @@
         class="list__remove-button"
         type="button"
         *ngIf="getFormArray('categories').length > 1"
-        (click)="removeAtIdex(i, 'categories')"
+        (click)="removeAtIndex(i, 'categories')"
       >
         x
       </button>

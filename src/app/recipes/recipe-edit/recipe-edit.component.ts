@@ -64,8 +64,8 @@ export class RecipeEditComponent implements OnInit {
     this.form.addControl(formArray);
   }
 
-  removeAtIdex(index: number, arrayName: string): void {
-    this.form.removeAtIdex(this.recipeForm, index, arrayName);
+  removeAtIndex(index: number, arrayName: string): void {
+    this.form.removeAtIndex(this.recipeForm, index, arrayName);
   }
 
   addControlToArrayByLastElement(i: number, arrayName: string): void {
@@ -97,5 +97,3 @@ export class RecipeEditComponent implements OnInit {
     this.router.navigate([AppRoutes.Recipe + '/' + this.id]);
   }
 }
-
-//handle categories list
