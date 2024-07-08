@@ -56,6 +56,10 @@ export class DataStorageService {
 
   updateRecipesList(databaseResponse: Object) {
     let newList: Recipe[] = [];
+    if (!databaseResponse) {
+      this.recipesService.updateRecipesList = [];
+      return;
+    }
     Object.values(databaseResponse).forEach((recipe) => {
       if (!(recipe as Recipe)) {
         return;
@@ -66,9 +70,7 @@ export class DataStorageService {
   }
 }
 
-//convert requests to user auth requests -> DONE
-//NULL ISSUES -> fix in user model first
-// -> add "read" available recipes for non registered users
+// -> add "read" available recipes for non registered users --> only login page available if not logged in
 // -> push one recipe as first recipe to user data?
 //"nothing here" page if recipes list is empty
 

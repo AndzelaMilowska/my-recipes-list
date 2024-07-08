@@ -1,4 +1,4 @@
-<div class="recipe-thumbnail__container">
+<div *ngIf="allRecipesList.length > 0" class="recipe-thumbnail__container">
   <div
     class="recipe-thumbnail col rounded"
     *ngFor="let recipe of allRecipesList"
@@ -22,4 +22,9 @@
       {{ recipe.description }}
     </p>
   </div>
+</div>
+
+<div *ngIf="allRecipesList.length < 1" class="empty-recipe-list">
+  <p>It seems like your list doesn't have any recipes added.</p>
+  <button routerLink="/edit" routerLinkActive="active">Add recipe</button>
 </div>

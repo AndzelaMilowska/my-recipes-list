@@ -5,8 +5,8 @@ import { recipeList } from './recipes-list.mocks';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesService {
-  private recipesList: Recipe[] = recipeList;
-
+  // private recipesList: Recipe[] = recipeList;
+  private recipesList: Recipe[] = [];
   get currentRecipesList() {
     return this.recipesList;
   }
@@ -40,6 +40,9 @@ export class RecipesService {
   }
 
   findAvailableIndex(recipeArray: Recipe[]) {
+    if (recipeArray.length === 0) {
+      return 1;
+    }
     const highestId = Math.max(...recipeArray.map((object) => object.id));
     return highestId + 1;
   }
