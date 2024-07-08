@@ -7,7 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../recipe.interface';
 import { RecipeFormService } from './recipe-form.service';
 import { AppRoutes } from '../../shared/routes.enum';
-import { recipeList } from '../recipes-list.mocks';
+import { DataStorageService } from '../../shared/data-storage.service';
+import { concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -28,6 +29,7 @@ export class RecipeEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private form: RecipeFormService,
+    private dataStorageService: DataStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +40,10 @@ export class RecipeEditComponent implements OnInit {
 
   loadRecipe(): void {
     if (!this.id) return;
-    this.loadedRecipe = this.recipesService.recipeById(this.id, recipeList);
+    this.loadedRecipe = this.recipesService.recipeById(
+      this.id,
+      this.recipesService.currentRecipesList,
+    );
     this.form.recreateRecipeForm(this.recipeForm, this.loadedRecipe);
   }
 
@@ -80,20 +85,42 @@ export class RecipeEditComponent implements OnInit {
     this.recipeForm.patchValue({ img: URL.createObjectURL(file) });
   }
 
+  updateRecipesData(recipe: Recipe) {
+    this.dataStorageService
+      .sendRecipesData(recipe)
+      .pipe(
+        concatMap(() => {
+          return this.dataStorageService.fetchRecipesData();
+        }),
+      )
+      .subscribe({
+        next: (response) => {
+          this.dataStorageService.updateRecipesList(response);
+          this.router.navigate([AppRoutes.Recipe + '/' + this.id]);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+
   saveRecipe(): void {
+    let currentRecipe: Recipe;
     if (this.id) {
-      this.recipesService.updateRecipe(
-        this.formToRecipe.convertFormToRecipe(this.recipeForm.value, this.id),
-        recipeList,
+      currentRecipe = this.formToRecipe.convertFormToRecipe(
+        this.recipeForm.value,
+        this.id,
       );
     } else {
-      this.id = this.recipesService.findAvailableIndex(recipeList);
-      this.recipesService.addRecipe(
-        this.formToRecipe.convertFormToRecipe(this.recipeForm.value, this.id),
-        recipeList,
+      this.id = this.recipesService.findAvailableIndex(
+        this.recipesService.currentRecipesList,
+      );
+      currentRecipe = this.formToRecipe.convertFormToRecipe(
+        this.recipeForm.value,
+        this.id,
       );
     }
 
-    this.router.navigate([AppRoutes.Recipe + '/' + this.id]);
+    this.updateRecipesData(currentRecipe);
   }
 }

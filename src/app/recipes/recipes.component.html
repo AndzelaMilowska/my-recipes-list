@@ -12,10 +12,13 @@
       <img
         class="recipe-thumbnail__img rounded"
         src="{{ displayRecipeImg(recipe.imgs[0]) }}"
-        alt=""
+        alt="recipe image"
       />
     </div>
-    <p *ngIf="!recipe.imgs" class="recipe-thumbnail__description">
+    <p
+      *ngIf="!recipe.imgs || recipe.imgs?.length === 0"
+      class="recipe-thumbnail__description"
+    >
       {{ recipe.description }}
     </p>
   </div>

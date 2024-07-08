@@ -1,1 +1,42 @@
-<p>login works!</p>
+<form (ngSubmit)="submitForm(authForm)" #authForm="ngForm">
+  <p *ngIf="error">{{ error }}</p>
+  <div>
+    <label for="login">Login/ email address</label>
+    <input id="login" type="email" name="login" ngModel required email />
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input
+      id="password"
+      type="password"
+      ngModel
+      name="password"
+      required
+      minlength="8"
+    />
+  </div>
+
+  <button
+    class="btn btn-primary"
+    [disabled]="authForm.invalid"
+    *ngIf="!isRegisterModeOn"
+  >
+    Login
+  </button>
+  <button
+    class="btn btn-primary"
+    [disabled]="authForm.invalid"
+    *ngIf="isRegisterModeOn"
+  >
+    Sign Up
+  </button>
+
+  <div>
+    <button *ngIf="!isRegisterModeOn" type="button" (click)="changeMode()">
+      Sign In
+    </button>
+    <button *ngIf="isRegisterModeOn" type="button" (click)="changeMode()">
+      Login
+    </button>
+  </div>
+</form>
