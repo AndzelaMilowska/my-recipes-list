@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { DataStorageService } from '../../shared/data-storage.service';
+import { Router } from '@angular/router';
+import { AppRoutes } from '../../shared/routes.enum';
+import { concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +18,7 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private dataStorageService: DataStorageService,
+    private router: Router,
   ) {}
 
   submitForm(formData: NgForm) {
@@ -34,43 +38,47 @@ export class LoginComponent {
     }
 
     this.isLogged = true;
-    this.getRecipesData();
   }
 
   changeMode() {
     this.isRegisterModeOn = !this.isRegisterModeOn;
   }
 
-  getRecipesData() {
-    this.dataStorageService.fetchRecipesData().subscribe({
-      next: (response) => {
-        this.dataStorageService.updateRecipesList(response);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-
   signUp(userEmail: string, userPassword: string) {
-    this.authService.signUp(userEmail, userPassword).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (err) => {
-        this.error = err;
-      },
-    });
+    this.authService
+      .signUp(userEmail, userPassword)
+      .pipe(
+        concatMap(() => {
+          return this.dataStorageService.fetchRecipesData();
+        }),
+      )
+      .subscribe({
+        next: (response) => {
+          this.dataStorageService.updateRecipesList(response);
+          this.router.navigate([AppRoutes.Recipes]);
+        },
+        error: (err) => {
+          this.error = err;
+        },
+      });
   }
 
   signIn(userEmail: string, userPassword: string) {
-    this.authService.signIn(userEmail, userPassword).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (err) => {
-        console.log(err.error.errors[0]);
-      },
-    });
+    this.authService
+      .signIn(userEmail, userPassword)
+      .pipe(
+        concatMap(() => {
+          return this.dataStorageService.fetchRecipesData();
+        }),
+      )
+      .subscribe({
+        next: (response) => {
+          this.dataStorageService.updateRecipesList(response);
+          this.router.navigate([AppRoutes.Recipes]);
+        },
+        error: (err) => {
+          this.error = err;
+        },
+      });
   }
 }

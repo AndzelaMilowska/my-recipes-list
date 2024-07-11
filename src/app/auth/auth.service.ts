@@ -9,8 +9,7 @@ import { SignInErrors } from './login/error-messages.enum';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new ReplaySubject<User>();
-
+  user = new BehaviorSubject<User>(new User('', '', '', new Date(2005, 4, 2)));
   constructor(private http: HttpClient) {}
   signUp(email: string, password: string) {
     return this.http
@@ -81,6 +80,11 @@ export class AuthService {
           ),
         ),
       );
+  }
+
+  logout() {
+    const emptyUser = new User('', '', '', new Date(2005, 4, 2));
+    this.user.next(emptyUser);
   }
 
   handleAuthentication(

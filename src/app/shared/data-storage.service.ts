@@ -40,9 +40,7 @@ export class DataStorageService {
       take(1),
       concatMap((user) => {
         if (!user.token) {
-          return this.http.get(
-            `${authConstants.projectURL}/${user.id}/recipes.json`,
-          );
+          return this.http.get(`${authConstants.projectURL}/recipes.json`);
         }
         return this.http.get(
           `${authConstants.projectURL}/${user.id}/recipes.json`,
@@ -70,16 +68,8 @@ export class DataStorageService {
   }
 }
 
-// -> add "read" available recipes for non registered users --> only login page available if not logged in
-// -> push one recipe as first recipe to user data?
-//"nothing here" page if recipes list is empty
-
-//after login success redirect to recipes list page and change button to logout
-//add logout
-//after logout button click -> redirect to login page
+//--> only login page available if not logged in -> guard?
 
 //add remove recipe request --> add remove recipe button xD --> redirect to all recipes
 
 //file upload
-
-// remove local recipesList updates, only track data from firebase
