@@ -2,9 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { authConstants } from '../auth/auth.constants';
 import { AuthService } from '../auth/auth.service';
-import { concatMap, take } from 'rxjs';
+import { concatMap, finalize, take } from 'rxjs';
 import { RecipesService } from '../recipes/recipes.service';
 import { Recipe } from '../recipes/recipe.interface';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({ providedIn: 'root' })
 export class DataStorageService {
@@ -12,7 +13,17 @@ export class DataStorageService {
     private http: HttpClient,
     private authService: AuthService,
     private recipesService: RecipesService,
+    private storage: AngularFireStorage,
   ) {}
+
+  uploadRecipeImage(file: File) {
+    const filePath = `uploads/${file.name}`;
+    const fileRef = this.storage.ref(filePath);
+    return this.storage
+      .upload(filePath, file)
+      .snapshotChanges()
+      .pipe(concatMap(fileRef.getDownloadURL));
+  }
 
   sendRecipesData(recipe: Recipe) {
     const recipesData = JSON.stringify(recipe);

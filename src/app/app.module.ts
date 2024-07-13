@@ -7,6 +7,9 @@ import { RecipesModule } from './recipes/recipes.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
+import { firebaseConfig } from './firebase.config';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarModule,
     AuthModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireStorageModule,
   ],
   bootstrap: [AppComponent],
 })

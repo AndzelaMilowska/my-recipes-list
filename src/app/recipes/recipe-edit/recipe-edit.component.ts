@@ -9,6 +9,7 @@ import { RecipeFormService } from './recipe-form.service';
 import { AppRoutes } from '../../shared/routes.enum';
 import { DataStorageService } from '../../shared/data-storage.service';
 import { concatMap } from 'rxjs';
+import { authConstants } from '../../auth/auth.constants';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -82,7 +83,8 @@ export class RecipeEditComponent implements OnInit {
     let file: File | null = element.files ? element.files[0] : null;
     if (!file) return;
     this.imagePreview = URL.createObjectURL(file);
-    this.recipeForm.patchValue({ img: URL.createObjectURL(file) });
+    // this.recipeForm.patchValue({ img: URL.createObjectURL(file) });
+    this.recipeForm.patchValue({ img: file });
   }
 
   updateRecipesData(recipe: Recipe) {
@@ -104,6 +106,20 @@ export class RecipeEditComponent implements OnInit {
       });
   }
 
+  uploadRecipeImage(recipeImage: string | File) {
+    if (recipeImage instanceof File) {
+      this.dataStorageService.uploadRecipeImage(recipeImage).subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+      });
+
+      if (typeof recipeImage === 'string') {
+        return;
+      }
+    }
+  }
+
   saveRecipe(): void {
     let currentRecipe: Recipe;
     if (this.id) {
@@ -120,7 +136,13 @@ export class RecipeEditComponent implements OnInit {
         this.id,
       );
     }
+    if (currentRecipe.imgs) {
+      this.uploadRecipeImage(currentRecipe.imgs[0]);
+    }
 
-    this.updateRecipesData(currentRecipe);
+    console.log('processing recipe is done');
+
+    //temp off requests
+    // this.updateRecipesData(currentRecipe);
   }
 }

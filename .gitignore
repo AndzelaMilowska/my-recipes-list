@@ -50,3 +50,4 @@ Thumbs.db
 .firebaserc
 database.rules.json
 firebase.json
+/src/app/firebase.config.ts
