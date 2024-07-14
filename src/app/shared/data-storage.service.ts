@@ -2,14 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { authConstants } from '../auth/auth.constants';
 import { AuthService } from '../auth/auth.service';
-import {
-  concatMap,
-  exhaustMap,
-  finalize,
-  Observable,
-  switchMap,
-  take,
-} from 'rxjs';
+import { concatMap, Observable, of, take, tap } from 'rxjs';
 import { RecipesService } from '../recipes/recipes.service';
 import { Recipe } from '../recipes/recipe.interface';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -23,13 +16,17 @@ export class DataStorageService {
     private storage: AngularFireStorage,
   ) {}
 
-  uploadRecipeImage(file: File) {
-    const filePath = `uploads/${file.name}`;
-    const fileRef = this.storage.ref(filePath);
-    return this.storage
-      .upload(filePath, file)
-      .snapshotChanges()
-      .pipe(exhaustMap(fileRef.getDownloadURL));
+  uploadRecipeImage(imageFile: string | File) {
+    if (imageFile instanceof File) {
+      const filePath = `uploads/${imageFile.name}`;
+      const fileRef = this.storage.ref(filePath);
+      return this.storage
+        .upload(filePath, imageFile)
+        .snapshotChanges()
+        .pipe(concatMap(fileRef.getDownloadURL));
+    } else {
+      return of(imageFile);
+    }
   }
 
   sendRecipesData(recipe: Recipe) {
@@ -83,6 +80,30 @@ export class DataStorageService {
       newList.push(recipe);
     });
     this.recipesService.updateRecipesList = newList;
+  }
+
+  uploadRecipeData(recipeData: Recipe) {
+    let recipeFileObservable: Observable<any>;
+    recipeFileObservable =
+      recipeData.imgs && recipeData.imgs[0]
+        ? this.uploadRecipeImage(recipeData.imgs[0])
+        : of(undefined);
+
+    return recipeFileObservable.pipe(
+      take(1),
+      tap((response) => {
+        if (response && recipeData.imgs && recipeData.imgs[0]) {
+          console.log(response);
+          recipeData.imgs[0] = response;
+        }
+      }),
+      concatMap(() => {
+        return this.sendRecipesData(recipeData);
+      }),
+      concatMap(() => {
+        return this.fetchRecipesData();
+      }),
+    );
   }
 }
 

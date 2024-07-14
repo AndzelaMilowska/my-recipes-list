@@ -8,8 +8,6 @@ import { Recipe } from '../recipe.interface';
 import { RecipeFormService } from './recipe-form.service';
 import { AppRoutes } from '../../shared/routes.enum';
 import { DataStorageService } from '../../shared/data-storage.service';
-import { concatMap, Observable, of, switchMap, take, tap } from 'rxjs';
-import { authConstants } from '../../auth/auth.constants';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -86,51 +84,16 @@ export class RecipeEditComponent implements OnInit {
     this.recipeForm.patchValue({ img: file });
   }
 
-  updateRecipesData(recipe: Recipe) {
-    return this.dataStorageService.sendRecipesData(recipe).pipe(
-      concatMap(() => {
-        return this.dataStorageService.fetchRecipesData();
-      }),
-    );
-  }
-
-  uploadRecipeImage(recipeImage: string | File): Observable<String> {
-    if (recipeImage instanceof File) {
-      return this.dataStorageService.uploadRecipeImage(recipeImage);
-    } else {
-      return of(recipeImage);
-    }
-  }
-
   uploadRecipeData(recipeData: Recipe) {
-    let recipeFileObservable: Observable<any>;
-    recipeFileObservable =
-      recipeData.imgs && recipeData.imgs[0]
-        ? this.uploadRecipeImage(recipeData.imgs[0])
-        : of(undefined);
-
-    recipeFileObservable
-      .pipe(
-        take(1),
-        tap((response) => {
-          if (response && recipeData.imgs && recipeData.imgs[0]) {
-            console.log(response);
-            recipeData.imgs[0] = response;
-          }
-        }),
-        switchMap(() => {
-          return this.updateRecipesData(recipeData);
-        }),
-      )
-      .subscribe({
-        next: (response) => {
-          this.dataStorageService.updateRecipesList(response);
-          this.router.navigate([AppRoutes.Recipe + '/' + this.id]);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+    this.dataStorageService.uploadRecipeData(recipeData).subscribe({
+      next: (response) => {
+        this.dataStorageService.updateRecipesList(response);
+        this.router.navigate([AppRoutes.Recipe + '/' + this.id]);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   saveRecipe(): void {
