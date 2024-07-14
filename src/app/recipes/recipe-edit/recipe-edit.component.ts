@@ -8,7 +8,7 @@ import { Recipe } from '../recipe.interface';
 import { RecipeFormService } from './recipe-form.service';
 import { AppRoutes } from '../../shared/routes.enum';
 import { DataStorageService } from '../../shared/data-storage.service';
-import { concatMap } from 'rxjs';
+import { concatMap, Observable, of, switchMap, take, tap } from 'rxjs';
 import { authConstants } from '../../auth/auth.constants';
 
 @Component({
@@ -83,16 +83,43 @@ export class RecipeEditComponent implements OnInit {
     let file: File | null = element.files ? element.files[0] : null;
     if (!file) return;
     this.imagePreview = URL.createObjectURL(file);
-    // this.recipeForm.patchValue({ img: URL.createObjectURL(file) });
     this.recipeForm.patchValue({ img: file });
   }
 
   updateRecipesData(recipe: Recipe) {
-    this.dataStorageService
-      .sendRecipesData(recipe)
+    return this.dataStorageService.sendRecipesData(recipe).pipe(
+      concatMap(() => {
+        return this.dataStorageService.fetchRecipesData();
+      }),
+    );
+  }
+
+  uploadRecipeImage(recipeImage: string | File): Observable<String> {
+    if (recipeImage instanceof File) {
+      return this.dataStorageService.uploadRecipeImage(recipeImage);
+    } else {
+      return of(recipeImage);
+    }
+  }
+
+  uploadRecipeData(recipeData: Recipe) {
+    let recipeFileObservable: Observable<any>;
+    recipeFileObservable =
+      recipeData.imgs && recipeData.imgs[0]
+        ? this.uploadRecipeImage(recipeData.imgs[0])
+        : of(undefined);
+
+    recipeFileObservable
       .pipe(
-        concatMap(() => {
-          return this.dataStorageService.fetchRecipesData();
+        take(1),
+        tap((response) => {
+          if (response && recipeData.imgs && recipeData.imgs[0]) {
+            console.log(response);
+            recipeData.imgs[0] = response;
+          }
+        }),
+        switchMap(() => {
+          return this.updateRecipesData(recipeData);
         }),
       )
       .subscribe({
@@ -106,22 +133,9 @@ export class RecipeEditComponent implements OnInit {
       });
   }
 
-  uploadRecipeImage(recipeImage: string | File) {
-    if (recipeImage instanceof File) {
-      this.dataStorageService.uploadRecipeImage(recipeImage).subscribe({
-        next: (response) => {
-          console.log(response);
-        },
-      });
-
-      if (typeof recipeImage === 'string') {
-        return;
-      }
-    }
-  }
-
   saveRecipe(): void {
     let currentRecipe: Recipe;
+
     if (this.id) {
       currentRecipe = this.formToRecipe.convertFormToRecipe(
         this.recipeForm.value,
@@ -136,13 +150,7 @@ export class RecipeEditComponent implements OnInit {
         this.id,
       );
     }
-    if (currentRecipe.imgs) {
-      this.uploadRecipeImage(currentRecipe.imgs[0]);
-    }
 
-    console.log('processing recipe is done');
-
-    //temp off requests
-    // this.updateRecipesData(currentRecipe);
+    this.uploadRecipeData(currentRecipe);
   }
 }

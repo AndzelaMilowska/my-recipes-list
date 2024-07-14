@@ -2,7 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { authConstants } from '../auth/auth.constants';
 import { AuthService } from '../auth/auth.service';
-import { concatMap, finalize, take } from 'rxjs';
+import {
+  concatMap,
+  exhaustMap,
+  finalize,
+  Observable,
+  switchMap,
+  take,
+} from 'rxjs';
 import { RecipesService } from '../recipes/recipes.service';
 import { Recipe } from '../recipes/recipe.interface';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -22,7 +29,7 @@ export class DataStorageService {
     return this.storage
       .upload(filePath, file)
       .snapshotChanges()
-      .pipe(concatMap(fileRef.getDownloadURL));
+      .pipe(exhaustMap(fileRef.getDownloadURL));
   }
 
   sendRecipesData(recipe: Recipe) {
