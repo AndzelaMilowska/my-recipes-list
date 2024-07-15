@@ -8,4 +8,6 @@ export const authConstants = {
     ' https://recipeslist-d7412-default-rtdb.europe-west1.firebasedatabase.app/',
   projectId: 'recipeslist-d7412',
   storageHost: 'https://firebasestorage.googleapis.com/v0/b/',
+  cloudStorage:
+    'https://firebasestorage.googleapis.com/v0/b/recipeslist-d7412.appspot.com/o/',
 };

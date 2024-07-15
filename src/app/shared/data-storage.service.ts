@@ -1,11 +1,14 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { authConstants } from '../auth/auth.constants';
 import { AuthService } from '../auth/auth.service';
 import { concatMap, Observable, of, take, tap } from 'rxjs';
 import { RecipesService } from '../recipes/recipes.service';
 import { Recipe } from '../recipes/recipe.interface';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+import {
+  AngularFireStorage,
+  AngularFireStorageReference,
+} from '@angular/fire/compat/storage';
 
 @Injectable({ providedIn: 'root' })
 export class DataStorageService {
@@ -18,12 +21,34 @@ export class DataStorageService {
 
   uploadRecipeImage(imageFile: string | File) {
     if (imageFile instanceof File) {
-      const filePath = `uploads/${imageFile.name}`;
-      const fileRef = this.storage.ref(filePath);
-      return this.storage
-        .upload(filePath, imageFile)
-        .snapshotChanges()
-        .pipe(concatMap(fileRef.getDownloadURL));
+      let fileRef: AngularFireStorageReference;
+      return this.authService.user.pipe(
+        take(1),
+        concatMap((user) => {
+          if (!user.token) {
+            fileRef = this.storage.ref(`${imageFile.name}`);
+            return of(undefined);
+          }
+
+          const formData = new FormData();
+          formData.append('thumbnail', imageFile);
+          let image_path = `${user.id}/${imageFile.name}`.replace('/', '%2F');
+          fileRef = this.storage.ref(`${user.id}/${imageFile.name}`);
+          return this.http.post(
+            `${authConstants.cloudStorage}${image_path}`,
+            formData,
+            {
+              headers: new HttpHeaders().set(
+                'Authorization',
+                `Bearer ${user.token}`,
+              ),
+            },
+          );
+        }),
+        concatMap(() => {
+          return fileRef.getDownloadURL();
+        }),
+      );
     } else {
       return of(imageFile);
     }
@@ -110,5 +135,3 @@ export class DataStorageService {
 //--> only login page available if not logged in -> guard?
 
 //add remove recipe request --> add remove recipe button xD --> redirect to all recipes
-
-//file upload
