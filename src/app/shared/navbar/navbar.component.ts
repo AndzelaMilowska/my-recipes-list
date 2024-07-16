@@ -4,6 +4,8 @@ import { AuthService } from '../../auth/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../routes.enum';
+import { RecipesService } from '../../recipes/recipes.service';
+import { Recipe } from '../../recipes/recipe.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -18,26 +20,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private categoriesService: CategoriesService,
     private authService: AuthService,
     private router: Router,
+    private recipesService: RecipesService,
   ) {}
   public userSubscription: Subscription;
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.user.subscribe(
-      (user) => {
-        if (user.token) {
-          this.isLoggedIn = true;
-          console.log(this.isLoggedIn);
-        }
-        if (!user.token) {
-          this.isLoggedIn = false;
-          console.log('loggedOut');
-        }
-      },
-      //if user token expiration date valid then change is logged into true
-    );
+    this.userSubscription = this.authService.user.subscribe((user) => {
+      if (user.token) {
+        this.isLoggedIn = true;
+      }
+      if (!user.token) {
+        this.isLoggedIn = false;
+      }
+    });
   }
   onLogout() {
     this.authService.logout();
+    this.recipesService.clearRecipesList();
     this.router.navigate([AppRoutes.Login]);
   }
   ngOnDestroy(): void {

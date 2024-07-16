@@ -19,6 +19,10 @@
     background-color: $secondary-color-02;
   }
 }
+#delete-button {
+  right: 7rem;
+  background-color: $primary-color-01;
+}
 
 .description-container {
   @include row-01;

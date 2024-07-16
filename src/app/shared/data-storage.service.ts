@@ -75,6 +75,23 @@ export class DataStorageService {
     );
   }
 
+  deleteRecipeData(recipeID: Number) {
+    return this.authService.user.pipe(
+      take(1),
+      concatMap((user) => {
+        if (!user.token) {
+          return of(undefined);
+        }
+        return this.http.delete(
+          `${authConstants.projectURL}/${user.id}/recipes/${recipeID}.json`,
+          {
+            params: new HttpParams().set('auth', user.token),
+          },
+        );
+      }),
+    );
+  }
+
   fetchRecipesData() {
     return this.authService.user.pipe(
       take(1),
@@ -118,7 +135,6 @@ export class DataStorageService {
       take(1),
       tap((response) => {
         if (response && recipeData.imgs && recipeData.imgs[0]) {
-          console.log(response);
           recipeData.imgs[0] = response;
         }
       }),
@@ -134,4 +150,4 @@ export class DataStorageService {
 
 //--> only login page available if not logged in -> guard?
 
-//add remove recipe request --> add remove recipe button xD --> redirect to all recipes
+//add remove recipe request --> redirect to all recipes

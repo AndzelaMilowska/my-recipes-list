@@ -4,7 +4,7 @@
 :host {
   display: inline-flex;
   width: 100%;
-
+  justify-content: space-evenly;
   & h3 {
     padding: $constant-005;
   }
@@ -57,7 +57,7 @@
 }
 
 .empty-recipe-list {
-  margin-top: 40%;
+  margin-top: 6rem;
   color: $primary-color-01;
   font-size: large;
   width: 100%;

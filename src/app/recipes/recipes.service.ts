@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from './recipe.interface';
 import { emptyRecipe } from './empty-recipe.constants';
-import { recipeList } from './recipes-list.mocks';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesService {
-  // private recipesList: Recipe[] = recipeList;
   private recipesList: Recipe[] = [];
   get currentRecipesList() {
     return this.recipesList;
@@ -13,6 +11,10 @@ export class RecipesService {
 
   set updateRecipesList(newRecipesList: Recipe[]) {
     this.recipesList = newRecipesList;
+  }
+
+  clearRecipesList() {
+    this.recipesList = [];
   }
 
   addRecipe(recipeObject: Recipe, recipeArray: Recipe[]) {

@@ -8,6 +8,7 @@ import { Recipe } from '../recipe.interface';
 import { RecipeFormService } from './recipe-form.service';
 import { AppRoutes } from '../../shared/routes.enum';
 import { DataStorageService } from '../../shared/data-storage.service';
+import { concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -22,6 +23,7 @@ export class RecipeEditComponent implements OnInit {
     ? +this.route.snapshot.queryParams['id']
     : null;
   loadedRecipe: Recipe | null;
+  removalType: string = 'Cancel';
   constructor(
     private formToRecipe: FormToRecipeService,
     private recipesService: RecipesService,
@@ -43,9 +45,32 @@ export class RecipeEditComponent implements OnInit {
       this.id,
       this.recipesService.currentRecipesList,
     );
+    this.removalType = 'Delete';
     this.form.recreateRecipeForm(this.recipeForm, this.loadedRecipe);
   }
 
+  deleteRecipe(): void {
+    if (!this.id) {
+      this.router.navigate([AppRoutes.Recipes]);
+      return;
+    }
+
+    this.dataStorageService
+      .deleteRecipeData(this.id)
+      .pipe(
+        concatMap(() => {
+          return this.dataStorageService.fetchRecipesData();
+        }),
+      )
+      .subscribe({
+        next: (response) => {
+          this.dataStorageService.updateRecipesList(response);
+        },
+        complete: () => {
+          this.router.navigate([AppRoutes.Recipes]);
+        },
+      });
+  }
   updateImagePreview(): void {
     if (
       !this.loadedRecipe?.imgs?.length ||
@@ -89,9 +114,6 @@ export class RecipeEditComponent implements OnInit {
       next: (response) => {
         this.dataStorageService.updateRecipesList(response);
         this.router.navigate([AppRoutes.Recipe + '/' + this.id]);
-      },
-      error: (err) => {
-        console.log(err);
       },
     });
   }
