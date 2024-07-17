@@ -5,12 +5,26 @@ import { RecipeComponent } from './recipes/recipe/recipe.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { AppRoutes } from './shared/routes.enum';
+import { AuthGuardService } from './auth/auth.guard.service';
 
 export const routes: Routes = [
+  { path: '', redirectTo: AppRoutes.Recipes, pathMatch: 'full' },
   { path: AppRoutes.Login, component: LoginComponent },
-  { path: AppRoutes.Recipes, component: RecipesComponent },
-  { path: AppRoutes.Recipe + '/:id', component: RecipeComponent },
-  { path: AppRoutes.Edit, component: RecipeEditComponent },
+  {
+    path: AppRoutes.Recipes,
+    component: RecipesComponent,
+    canActivate: [AuthGuardService.authGuardFn],
+  },
+  {
+    path: AppRoutes.Recipe + '/:id',
+    component: RecipeComponent,
+    canActivate: [AuthGuardService.authGuardFn],
+  },
+  {
+    path: AppRoutes.Edit,
+    component: RecipeEditComponent,
+    canActivate: [AuthGuardService.authGuardFn],
+  },
 ];
 
 @NgModule({
