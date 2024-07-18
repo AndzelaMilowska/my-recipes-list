@@ -13,17 +13,17 @@ export const routes: Routes = [
   {
     path: AppRoutes.Recipes,
     component: RecipesComponent,
-    canActivate: [AuthGuardService.authGuardFn],
+    canActivate: [AuthGuardService],
   },
   {
     path: AppRoutes.Recipe + '/:id',
     component: RecipeComponent,
-    canActivate: [AuthGuardService.authGuardFn],
+    canActivate: [AuthGuardService],
   },
   {
     path: AppRoutes.Edit,
     component: RecipeEditComponent,
-    canActivate: [AuthGuardService.authGuardFn],
+    canActivate: [AuthGuardService],
   },
 ];
 
