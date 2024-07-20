@@ -5,6 +5,10 @@
   height: 100%;
 }
 
+@mixin error {
+  border: $border-01;
+  background-color: $primary-color-01_0_2;
+}
 @mixin header-container {
   width: 100%;
   border-bottom: 2px solid $primary-color-01;

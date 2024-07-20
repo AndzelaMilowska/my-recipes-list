@@ -1,5 +1,6 @@
 $primary-color-01: #994444;
 $primary-color-01_0_8: #974444cc;
+$primary-color-01_0_2: rgba(151, 68, 68, 0.3);
 $secondary-color-01: #2cada4be;
 $secondary-color-02: #72c7c1b0;
 $secondary-color-03: #2cada4;
@@ -39,6 +40,7 @@ $padding-005-01: $constant-005 $constant-01;
 $padding-01-0025: $constant-01 $constant-025;
 $margin-005-0: $constant-005 0;
 $margin-0-025: 0 $constant-025 0 0;
+$margin-0-01: 0 $constant-01;
 
 $border-radius-005: $constant-005;
 $border-radius-01: $constant-01;

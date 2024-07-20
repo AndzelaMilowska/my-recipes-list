@@ -24,6 +24,7 @@ export class RecipeEditComponent implements OnInit {
     : null;
   loadedRecipe: Recipe | null;
   removalType: string = 'Cancel';
+  displayValidationError: boolean;
   constructor(
     private formToRecipe: FormToRecipeService,
     private recipesService: RecipesService,
@@ -37,6 +38,14 @@ export class RecipeEditComponent implements OnInit {
     this.recipeForm = this.form.createEmptyForm();
     this.loadRecipe();
     this.updateImagePreview();
+  }
+
+  displaySectionAlert(sectionName: string): boolean | undefined {
+    let section = this.recipeForm.get(sectionName);
+    return (
+      (section?.invalid && (section?.dirty || section?.touched)) ||
+      (this.displayValidationError && section?.invalid)
+    );
   }
 
   loadRecipe(): void {
@@ -121,6 +130,13 @@ export class RecipeEditComponent implements OnInit {
   saveRecipe(): void {
     let currentRecipe: Recipe;
 
+    if (!this.recipeForm.valid) {
+      this.recipeForm.markAllAsTouched();
+      this.displayValidationError = true;
+      return;
+    }
+
+    this.displayValidationError = false;
     if (this.id) {
       currentRecipe = this.formToRecipe.convertFormToRecipe(
         this.recipeForm.value,
