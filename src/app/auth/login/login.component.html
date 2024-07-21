@@ -1,10 +1,10 @@
-<form (ngSubmit)="submitForm(authForm)" #authForm="ngForm">
-  <p *ngIf="error">{{ error }}</p>
-  <div>
-    <label for="login">Login/ email address</label>
+<form (ngSubmit)="submitForm(authForm)" #authForm="ngForm" class="login-form">
+  <p *ngIf="error" class="error-container rounded">{{ error }}</p>
+  <div class="login-form__auth">
+    <label for="login">Email address</label>
     <input id="login" type="email" name="login" ngModel required email />
   </div>
-  <div>
+  <div class="login-form__auth">
     <label for="password">Password</label>
     <input
       id="password"
@@ -16,26 +16,24 @@
     />
   </div>
 
-  <button
-    class="btn btn-primary"
-    [disabled]="authForm.invalid"
-    *ngIf="!isRegisterModeOn"
-  >
-    Login
-  </button>
-  <button
-    class="btn btn-primary"
-    [disabled]="authForm.invalid"
-    *ngIf="isRegisterModeOn"
-  >
-    Sign Up
-  </button>
+  <button class="submit-button" *ngIf="!isRegisterModeOn">Login</button>
+  <button class="submit-button" *ngIf="isRegisterModeOn">Sign Up</button>
 
-  <div>
-    <button *ngIf="!isRegisterModeOn" type="button" (click)="changeMode()">
+  <div class="switch-mode-container">
+    <button
+      *ngIf="!isRegisterModeOn"
+      type="button"
+      (click)="changeMode()"
+      class="switch-mode-button"
+    >
       Sign Up
     </button>
-    <button *ngIf="isRegisterModeOn" type="button" (click)="changeMode()">
+    <button
+      *ngIf="isRegisterModeOn"
+      type="button"
+      (click)="changeMode()"
+      class="switch-mode-button"
+    >
       Login
     </button>
   </div>

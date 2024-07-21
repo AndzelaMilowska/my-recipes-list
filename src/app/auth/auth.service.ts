@@ -6,6 +6,7 @@ import { BehaviorSubject, catchError, ReplaySubject, tap } from 'rxjs';
 import { throwError } from 'rxjs';
 import { User } from './user.model';
 import { SignInErrors } from './login/error-messages.enum';
+import { SignUpErrors } from './login/error-messages.enum';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -27,8 +28,11 @@ export class AuthService {
           }
           switch (err.error.error.message) {
             case 'EMAIL_EXISTS':
-              errorMessage =
-                'The email address is already in use by another account.';
+              errorMessage = SignUpErrors.EMAIL_EXISTS;
+              break;
+            case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+              errorMessage = SignUpErrors.TOO_MANY_ATTEMPTS_TRY_LATER;
+              break;
           }
 
           return throwError(() => new Error(errorMessage));
@@ -60,12 +64,13 @@ export class AuthService {
           }
           switch (err.error.error.message) {
             case 'EMAIL_NOT_FOUND':
-              errorMessage =
-                'There is no user record corresponding to this identifier.';
+              errorMessage = SignInErrors.EMAIL_NOT_FOUND;
+              break;
+            case 'INVALID_LOGIN_CREDENTIALS':
+              errorMessage = SignInErrors.INVALID_LOGIN_CREDENTIALS;
               break;
             case 'INVALID_PASSWORD':
-              errorMessage =
-                'The password is invalid or the user does not have a password.';
+              errorMessage = SignInErrors.INVALID_PASSWORD;
               break;
           }
 

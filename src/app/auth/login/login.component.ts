@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { DataStorageService } from '../../shared/data-storage.service';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../../shared/routes.enum';
 import { concatMap } from 'rxjs';
+import { AuthFormErrors } from './error-messages.enum';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ import { concatMap } from 'rxjs';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  @Input() login: string;
   isLogged: boolean = false;
   isRegisterModeOn: boolean = false;
   error: string;
@@ -22,12 +24,22 @@ export class LoginComponent {
   ) {}
 
   submitForm(formData: NgForm) {
-    if (!formData) {
+    let email = formData.value.login;
+    let password = formData.value.password;
+
+    if (formData.form.controls['login'].status === 'INVALID') {
+      this.error = AuthFormErrors.INVALID_EMAIL;
       return;
     }
 
-    let email = formData.value.login;
-    let password = formData.value.password;
+    if (password.length < 8) {
+      this.error = AuthFormErrors.PASSWORD_IS_TO_SHORT;
+      return;
+    }
+
+    if (formData.invalid) {
+      return;
+    }
 
     if (this.isRegisterModeOn) {
       this.signUp(email, password);
