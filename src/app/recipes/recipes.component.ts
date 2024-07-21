@@ -3,7 +3,6 @@ import { RecipesService } from './recipes.service';
 import { Router } from '@angular/router';
 import { Recipe } from './recipe.interface';
 import { AppRoutes } from '../shared/routes.enum';
-import { recipeList } from './recipes-list.mocks';
 
 @Component({
   selector: 'app-recipes',
@@ -16,7 +15,7 @@ export class RecipesComponent {
     private router: Router,
   ) {}
 
-  allRecipesList: Recipe[] = recipeList;
+  allRecipesList: Recipe[] = this.recipes.currentRecipesList;
 
   onClick(recipeId: number) {
     this.router.navigate([AppRoutes.Recipe + '/' + recipeId]);

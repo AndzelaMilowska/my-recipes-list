@@ -1,6 +1,7 @@
 <nav class="h-100 sidebar d-flex flex-column p-3">
   <!-- <button>Logout/login</button>  ngIf ='isLoggedIn'-->
   <button
+    *ngIf="!isLoggedIn"
     class="sidebar__button"
     type="button"
     routerLink="/login"
@@ -9,7 +10,15 @@
     <img class="sidebar__icon" src="./../../assets/login-icon.svg" />
     Login
   </button>
-
+  <button
+    *ngIf="isLoggedIn"
+    class="sidebar__button"
+    type="button"
+    (click)="onLogout()"
+  >
+    <img class="sidebar__icon" src="./../../assets/login-icon.svg" />
+    Logout
+  </button>
   <button
     class="sidebar__button"
     type="button"
@@ -38,10 +47,10 @@
       </li>
     </ul>
   </div>
-  <div class="sidebar__button">
+  <!-- <div class="sidebar__button">
     <img class="sidebar__icon" src="./../../assets/search-icon.svg" />
     <input class="sidebar__searchbar" type="text" placeholder="Search.." />
-  </div>
+  </div> -->
 </nav>
 
 <div class="test"></div>

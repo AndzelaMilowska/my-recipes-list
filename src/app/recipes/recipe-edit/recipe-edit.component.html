@@ -9,13 +9,36 @@
         placeholder="Recipe Title.."
       />
     </h1>
+    <button class="submit-button rounded" type="submit">Save</button>
     <button
       class="submit-button rounded"
-      type="submit"
-      [disabled]="!recipeForm.valid"
+      type="button"
+      id="delete-button"
+      (click)="deleteRecipe()"
     >
-      Save
+      {{ removalType }}
     </button>
+  </div>
+
+  <div
+    class="error-container rounded"
+    *ngIf="
+      displaySectionAlert('title') ||
+      displaySectionAlert('instructions') ||
+      displaySectionAlert('description') ||
+      displaySectionAlert('ingredients')
+    "
+  >
+    <p *ngIf="displaySectionAlert('title')">Recipe title is missing.</p>
+    <p *ngIf="displaySectionAlert('description')">
+      Recipe description is missing.
+    </p>
+    <p *ngIf="displaySectionAlert('ingredients')">
+      Recipe ingredients contains blank fields.
+    </p>
+    <p *ngIf="displaySectionAlert('instructions')">
+      Recipe method contains blank fields.
+    </p>
   </div>
 
   <div class="description-container">
@@ -67,7 +90,10 @@
             let i = index
           "
         >
-          <div [formGroup]="$any(ingredient)" class="ingredient list__element">
+          <div
+            [formGroup]="$any(ingredient)"
+            class="ingredient rounded list__element"
+          >
             <label for="{{ 'ingredient_' + i }}"></label>
             <input
               class="ingredient__name"
@@ -136,7 +162,7 @@
           <label for="instruction_{{ i }}"></label>
           <textarea
             rows="3"
-            class="recipe-method__input"
+            class="recipe-method__input rounded"
             id="instruction_{{ i }}"
             [formControlName]="i"
             placeholder="Enter next step.."

@@ -4,6 +4,19 @@ import { emptyRecipe } from './empty-recipe.constants';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesService {
+  private recipesList: Recipe[] = [];
+  get currentRecipesList() {
+    return this.recipesList;
+  }
+
+  set updateRecipesList(newRecipesList: Recipe[]) {
+    this.recipesList = newRecipesList;
+  }
+
+  clearRecipesList() {
+    this.recipesList = [];
+  }
+
   addRecipe(recipeObject: Recipe, recipeArray: Recipe[]) {
     recipeArray.push(recipeObject);
   }
@@ -29,6 +42,9 @@ export class RecipesService {
   }
 
   findAvailableIndex(recipeArray: Recipe[]) {
+    if (recipeArray.length === 0) {
+      return 1;
+    }
     const highestId = Math.max(...recipeArray.map((object) => object.id));
     return highestId + 1;
   }

@@ -3,7 +3,7 @@ import { RecipesService } from '../recipes.service';
 import { Recipe } from '../recipe.interface';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../../shared/routes.enum';
-import { recipeList } from '../recipes-list.mocks';
+import { DataStorageService } from '../../shared/data-storage.service';
 
 @Component({
   selector: 'app-recipe',
@@ -19,9 +19,13 @@ export class RecipeComponent implements OnInit {
 
   activeRecipe: Recipe;
   initialPortions: number;
+
   ngOnInit(): void {
     if (this.id) {
-      this.activeRecipe = this.recipes.recipeById(+this.id, recipeList);
+      this.activeRecipe = this.recipes.recipeById(
+        +this.id,
+        this.recipes.currentRecipesList,
+      );
       this.initialPortions = this.activeRecipe.numberOfPortions;
     }
   }
