@@ -106,8 +106,8 @@ export class RecipeEditComponent implements OnInit {
     this.form.removeAtIndex(this.recipeForm, index, arrayName);
   }
 
-  addControlToArrayByLastElement(i: number, arrayName: string): void {
-    this.form.addControlToArrayByLastElement(this.recipeForm, i, arrayName);
+  addOptionalControl(arrayName: string): void {
+    this.form.addOptionalControl(this.recipeForm, arrayName);
   }
 
   updatePreviewImg(event: Event): void {

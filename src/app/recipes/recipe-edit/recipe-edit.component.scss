@@ -242,3 +242,17 @@
     }
   }
 }
+
+.add-category_button {
+  @include button-02;
+  margin: $constant-005;
+  padding: 0 0.25rem;
+  color: white;
+  cursor: pointer;
+  position: static;
+  background-color: $secondary-color-01;
+
+  &:hover {
+    background-color: $secondary-color-03;
+  }
+}

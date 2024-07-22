@@ -1,5 +1,4 @@
 <nav class="h-100 sidebar d-flex flex-column p-3">
-  <!-- <button>Logout/login</button>  ngIf ='isLoggedIn'-->
   <button
     *ngIf="!isLoggedIn"
     class="sidebar__button"
@@ -39,18 +38,6 @@
     <img class="sidebar__icon" src="./../../assets/recipes-icon.svg" />
     Recipes
   </button>
-
-  <div class="sidebar__categories" *ngIf="categoriesVisibility">
-    <ul>
-      <li *ngFor="let category of categoriesList">
-        <button class="sidebar__categories__button">{{ category }}</button>
-      </li>
-    </ul>
-  </div>
-  <!-- <div class="sidebar__button">
-    <img class="sidebar__icon" src="./../../assets/search-icon.svg" />
-    <input class="sidebar__searchbar" type="text" placeholder="Search.." />
-  </div> -->
 </nav>
 
 <div class="test"></div>

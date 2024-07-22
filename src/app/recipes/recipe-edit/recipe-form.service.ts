@@ -57,20 +57,9 @@ export class RecipeFormService {
     return <FormControl>formObject.get(path + '.' + index);
   }
 
-  addControlToArrayByLastElement(
-    formObject: FormGroup,
-    i: number,
-    arrayName: string,
-  ) {
-    const arrayLength = this.getFormArray(formObject, arrayName).length;
-    const isDirty = this.getFormControlFromArray(
-      formObject,
-      arrayName,
-      i,
-    ).dirty;
-    if (arrayLength - 1 === i && isDirty) {
-      this.addControl(this.getFormArray(formObject, arrayName));
-    }
+  addOptionalControl(formObject: FormGroup, arrayName: string) {
+    const control = new FormControl(null);
+    (<FormArray>this.getFormArray(formObject, arrayName)).push(control);
   }
 
   recreateRecipeForm(formObject: FormGroup, recipe: Recipe) {
@@ -102,7 +91,7 @@ export class RecipeFormService {
       this.removeAtIndex(formObject, 0, 'categories');
       for (let category of recipe.categories) {
         this.getFormArray(formObject, 'categories').push(
-          new FormControl(category, Validators.required),
+          new FormControl(category),
         );
       }
     }
