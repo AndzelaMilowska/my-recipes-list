@@ -7,7 +7,7 @@ export class FormToRecipeService {
   constructor() {}
 
   convertFormToRecipe(formValues: RecipeForm, index: number): Recipe {
-    const {
+    let {
       title,
       img,
       description,
@@ -17,6 +17,14 @@ export class FormToRecipeService {
       numberOfPortions,
       id,
     } = formValues;
+
+    if (categories) {
+      let filteredCategories = categories.filter(
+        (category) => typeof category === 'string' && category.length > 0,
+      );
+      categories = filteredCategories;
+    }
+
     return {
       title,
       description,

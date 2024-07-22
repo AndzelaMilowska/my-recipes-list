@@ -190,13 +190,11 @@
       "
     >
       <label for="categoryInput"></label>
-      <!-- keydown enter submits form occasionally -->
       <input
         id="categoryInput"
         type="text"
         [formControlName]="i"
         placeholder="category"
-        (keydown.enter)="addControlToArrayByLastElement(i, 'categories')"
       />
       <button
         class="list__remove-button"
@@ -207,5 +205,12 @@
         x
       </button>
     </div>
+    <button
+      class="rounded add-category_button"
+      type="button"
+      (click)="addOptionalControl('categories')"
+    >
+      +
+    </button>
   </div>
 </form>
