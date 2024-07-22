@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../routes.enum';
 import { RecipesService } from '../../recipes/recipes.service';
-import { Recipe } from '../../recipes/recipe.interface';
 
 @Component({
   selector: 'app-navbar',
