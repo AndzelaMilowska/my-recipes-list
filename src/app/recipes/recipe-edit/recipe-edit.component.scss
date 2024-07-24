@@ -2,8 +2,8 @@
 @import "../../../scss/mixins.scss";
 
 :host {
-  width: 100%;
-  display: flex;
+  max-width: 100%;
+  display: block;
   overflow: hidden;
 }
 
@@ -80,7 +80,7 @@
     background-color: $white_0_25;
 
     input {
-      width: $constant-125;
+      width: $constant-em-01;
       color: transparent;
       overflow: hidden;
 
