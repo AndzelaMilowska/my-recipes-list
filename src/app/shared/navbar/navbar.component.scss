@@ -3,6 +3,7 @@
 
 :host {
   height: $constant-vh-01;
+  z-index: 10;
 }
 :host(.menu_invisible) {
   position: fixed;
@@ -141,7 +142,6 @@ nav {
   :host {
     position: absolute;
     width: $constant-vw-02;
-    z-index: 10;
   }
   :host(.menu_invisible) {
     left: $constant-vw-02r;

@@ -1,6 +1,12 @@
 @import "../../../scss/variables.scss";
 @import "../../../scss/mixins.scss";
 
+:host {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
 .header-container {
   @include header-container;
 
