@@ -4,14 +4,16 @@ $primary-color-01_0_2: rgba(151, 68, 68, 0.3);
 $secondary-color-01: #2cada4be;
 $secondary-color-02: #72c7c1b0;
 $secondary-color-03: #2cada4;
-$white: white;
+$white: #ffffff;
 $white_0_25: rgba(255, 255, 255, 0.25);
 $white_0_4: rgba(255, 255, 255, 0.4);
+$white_0_6: rgba(255, 255, 255, 0.6);
 
 $border-01: 2px solid $primary-color-01;
 $border-02: 2px solid $white;
 
 $constant-r01: -1rem;
+$constant-r04: -4rem;
 $constant-r0075: -0.75rem;
 $constant-025: 0.25rem;
 $constant-005: 0.5rem;
@@ -27,11 +29,17 @@ $constant-07: 7rem;
 $constant-10: 10rem;
 $constant-15: 15rem;
 $constant-vw-01: 30vw;
+$constant-vw-02: 80vw;
+$constant-vw-02r: -80vw;
+$constant-vw-03: 100vw;
+$constant-vw-03r: -100vw;
 $constant-vh-01: 100vh;
 $constant-vh-02: 60vh;
 $constant-125: 125px;
 
 $padding-0-01: 0 $constant-01;
+$padding-01: 0 $constant-01 0 0;
+$padding-02: $constant-015 0 $constant-03 $constant-01;
 $padding-0-005: 0 $constant-005;
 $padding-0-025: 0 $constant-025;
 $padding-025-0: $constant-025 0;
@@ -44,4 +52,5 @@ $margin-0-01: 0 $constant-01;
 
 $border-radius-005: $constant-005;
 $border-radius-01: $constant-01;
+$border-radius-02: 0 $constant-015 $constant-015 0;
 $border-radius-00-11: 0 0 $constant-01 $constant-01;

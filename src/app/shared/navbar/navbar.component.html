@@ -1,4 +1,22 @@
-<nav class="h-100 sidebar d-flex flex-column p-3">
+<nav class="h-100 sidebar d-flex flex-column">
+  <button
+    class="hamburger-menu__button"
+    type="button"
+    (click)="toggleMenuVisibility()"
+    [ngClass]="{ background_fill: !menuVisibility }"
+  >
+    <img
+      *ngIf="!menuVisibility"
+      class="hamburger-menu-icon"
+      src="./../../assets/double-arrow.svg"
+    />
+
+    <img
+      *ngIf="menuVisibility"
+      class="hamburger-menu-icon"
+      src="./../../assets/hamburger-menu-icon.svg"
+    />
+  </button>
   <button
     *ngIf="!isLoggedIn"
     class="sidebar__button"

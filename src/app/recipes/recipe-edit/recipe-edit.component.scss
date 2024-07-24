@@ -23,8 +23,9 @@
     background-color: $secondary-color-02;
   }
 }
+
 #delete-button {
-  right: 7rem;
+  right: 6rem;
   background-color: $primary-color-01;
 }
 
@@ -168,6 +169,7 @@
     cursor: pointer;
     width: $constant-04;
     background-color: transparent;
+
     &:focus {
       outline: none;
     }
@@ -183,9 +185,11 @@
     width: 100%;
     max-height: $constant-10;
   }
+
   .ng-invalid.ng-touched {
     @include error;
   }
+
   ol {
     all: unset;
     counter-reset: item;
@@ -254,5 +258,48 @@
 
   &:hover {
     background-color: $secondary-color-03;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .submit-button {
+    top: auto;
+    bottom: $constant-005;
+  }
+
+  .header-container {
+    padding: $padding-02;
+    margin: 0;
+  }
+
+  .description-container {
+    @include flex-column;
+    width: 100%;
+  }
+
+  .description-container__input {
+    min-height: $constant-15;
+  }
+
+  .recipe-body {
+    @include flex-column-01;
+  }
+
+  .description-container__image {
+    width: 100%;
+  }
+
+  .ingredients-container {
+    border-right: 0;
+    width: 100%;
+  }
+
+  .description-container__image-input {
+    width: 70%;
+    right: $constant-02;
+  }
+
+  .recipe-method {
+    width: 100%;
   }
 }

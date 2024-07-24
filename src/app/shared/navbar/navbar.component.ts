@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { CategoriesService } from '../categories.service';
 import { AuthService } from '../../auth/auth.service';
 import { Subscription } from 'rxjs';
@@ -10,11 +10,13 @@ import { RecipesService } from '../../recipes/recipes.service';
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
+  host: { '[class.menu_invisible]': 'menuVisibility' },
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   categoriesList: string[] = this.categoriesService.categories;
   categoriesVisibility: boolean = false;
   isLoggedIn: boolean = false;
+  menuVisibility: boolean = true;
   constructor(
     private categoriesService: CategoriesService,
     private authService: AuthService,
@@ -32,6 +34,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.isLoggedIn = false;
       }
     });
+  }
+  toggleMenuVisibility(): void {
+    this.menuVisibility = !this.menuVisibility;
   }
   onLogout() {
     this.authService.logout();

@@ -3,10 +3,11 @@
 
 .recipe__header-container {
   @include header-container;
+  position: relative;
 }
 
 .recipe__header {
-  padding-left: $constant-01;
+  padding-left: $constant-02;
 }
 
 .recipe__categories-container {
@@ -21,6 +22,7 @@
   background-color: $primary-color-01;
   color: $white;
   padding: $constant-025;
+
   &:hover {
     background-color: $secondary-color-01;
   }
@@ -34,9 +36,11 @@
 .recipe__description-container {
   @include row-01;
   padding: $constant-01;
+
   & > * {
     @include column-01;
   }
+
   p {
     word-break: break-word;
     overflow: hidden;
@@ -78,6 +82,7 @@
 
 .ingredients__multiplier {
   display: inline-flex;
+
   & > * {
     height: 100%;
     padding: $padding-0-025;
@@ -97,5 +102,42 @@
 
   & h3 {
     padding-right: $constant-01;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .recipe__edit-button {
+    top: auto;
+    bottom: $constant-005;
+  }
+
+  .recipe__header {
+    padding-bottom: $constant-01;
+  }
+
+  .recipe__description-container {
+    @include flex-column;
+    width: 100%;
+  }
+
+  .recipe__body {
+    @include flex-column-01;
+  }
+
+  .recipe__ingredients-header {
+    width: 100%;
+  }
+
+  .recipe__ingredients-container {
+    border-right: 0;
+    width: 100%;
+  }
+
+  .ingredients__multiplier {
+    padding: $padding-01;
+  }
+
+  .recipe__method {
+    width: 100%;
   }
 }
