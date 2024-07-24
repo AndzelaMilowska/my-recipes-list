@@ -2,7 +2,7 @@
 @import "../../../scss/mixins.scss";
 
 :host {
-  height: $constant-vh-01;
+  height: $fill-height-100;
   z-index: 10;
 }
 :host(.menu_invisible) {
@@ -40,7 +40,6 @@ nav {
 .sidebar {
   position: relative;
   background-color: $primary-color-01;
-  height: 100%;
   top: 0;
   align-items: center;
   min-width: $constant-15;
@@ -140,17 +139,18 @@ nav {
 }
 @media only screen and (max-width: 600px) {
   :host {
+    min-width: none;
     position: absolute;
-    width: $constant-vw-02;
+    width: $fill-width-01;
   }
   :host(.menu_invisible) {
-    left: $constant-vw-02r;
+    left: calc($fill-width-01 * (-1));
   }
 
   .background_fill {
-    right: $constant-vw-03r;
-    width: $constant-vw-03;
-    height: $constant-vh-01;
+    right: calc($fill-width-100 * (-1));
+    width: $fill-width-100;
+    height: $fill-height-100;
     background-color: $white_0_6;
     border: 0;
   }
@@ -164,8 +164,6 @@ nav {
   :host {
     position: static;
     width: $constant-15;
-    max-width: 30vw;
-
     z-index: 10;
   }
   :host(.menu_invisible) {

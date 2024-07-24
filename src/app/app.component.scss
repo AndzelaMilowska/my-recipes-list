@@ -1,7 +1,7 @@
 @import "../scss/variables.scss";
 
 :host {
-  height: $constant-vh-01;
+  height: $fill-height-100;
   overflow: scroll;
   position: relative;
 }
@@ -16,6 +16,6 @@
 .app-body {
   width: 100%;
   overflow: hidden;
-  height: $constant-vh-01;
+  height: $fill-height-100;
   position: relative;
 }
