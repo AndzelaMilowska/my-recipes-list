@@ -2,11 +2,42 @@
 @import "../../../scss/mixins.scss";
 
 :host {
-  width: $constant-vw-01;
   height: $constant-vh-01;
 }
+:host(.menu_invisible) {
+  position: fixed;
+  left: -15rem;
+}
 
+nav {
+  position: relative;
+  padding: $constant-01;
+  z-index: 2;
+}
+
+.hamburger-menu__button {
+  all: unset;
+  background-color: $white;
+  position: absolute;
+  top: $constant-005;
+  right: $constant-r04;
+  width: $constant-04;
+  height: $constant-02;
+  border-radius: $border-radius-02;
+  border: $border-01;
+  box-sizing: border-box;
+  border-left: 0;
+}
+
+.hamburger-menu-icon {
+  width: $constant-02;
+  height: $constant-02;
+  position: absolute;
+  top: -0.1rem;
+  left: $constant-015;
+}
 .sidebar {
+  position: relative;
   background-color: $primary-color-01;
   height: 100%;
   top: 0;
@@ -101,5 +132,50 @@
 
   &::placeholder {
     color: $white_0_4;
+  }
+}
+.menu_invisible {
+  left: -20rem;
+}
+@media only screen and (max-width: 600px) {
+  :host {
+    position: absolute;
+    width: $constant-vw-02;
+    z-index: 10;
+  }
+  :host(.menu_invisible) {
+    left: $constant-vw-02r;
+  }
+
+  .background_fill {
+    right: $constant-vw-03r;
+    width: $constant-vw-03;
+    height: $constant-vh-01;
+    background-color: $white_0_6;
+    border: 0;
+  }
+
+  nav {
+    padding-top: 40%;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  :host {
+    position: static;
+    width: $constant-15;
+    max-width: 30vw;
+
+    z-index: 10;
+  }
+  :host(.menu_invisible) {
+    position: static;
+  }
+
+  nav {
+    padding-top: 40%;
+  }
+  .hamburger-menu__button {
+    display: none;
   }
 }

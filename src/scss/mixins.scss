@@ -14,13 +14,14 @@
   border-bottom: 2px solid $primary-color-01;
   margin: 1rem 0;
   padding: 0.5rem 0;
+  position: relative;
 }
 
 @mixin button-01 {
   @include button-02;
   position: absolute;
   top: 0;
-  right: 2rem;
+  right: 1rem;
 }
 
 @mixin button-02 {
@@ -52,4 +53,11 @@
   padding: $constant-01;
   border-right: $border-01;
   align-items: stretch;
+}
+
+@mixin flex-column-01 {
+  @include flex-column;
+  width: 100%;
+  margin-left: 0;
+  padding: 0;
 }

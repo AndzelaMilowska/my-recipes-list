@@ -16,6 +16,7 @@
   display: inline-flex;
   flex-wrap: wrap;
   padding: $padding-01-0025;
+  padding-top: $constant-02;
 }
 
 .recipe-thumbnail {
@@ -74,5 +75,11 @@
     &:hover {
       background-color: $primary-color-01;
     }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .recipe-thumbnail {
+    max-width: 80%;
   }
 }

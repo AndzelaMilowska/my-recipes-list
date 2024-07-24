@@ -4,15 +4,18 @@
   height: $constant-vh-01;
   overflow: scroll;
   position: relative;
-  width: 100%;
 }
 
 .content-container {
   width: 100%;
   border: $border-01;
   margin: $constant-01;
+  overflow: scroll;
 }
 
 .app-body {
   width: 100%;
+  overflow: hidden;
+  height: $constant-vh-01;
+  position: relative;
 }
