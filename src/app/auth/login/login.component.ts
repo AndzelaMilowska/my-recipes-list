@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AppRoutes } from '../../shared/routes.enum';
 import { concatMap } from 'rxjs';
 import { AuthFormErrors } from './error-messages.enum';
+import { recipeStarter } from '../../shared/start-recipe.mocks';
 
 @Component({
   selector: 'app-login',
@@ -60,6 +61,9 @@ export class LoginComponent {
     this.authService
       .signUp(userEmail, userPassword)
       .pipe(
+        concatMap(() => {
+          return this.dataStorageService.sendRecipesData(recipeStarter);
+        }),
         concatMap(() => {
           return this.dataStorageService.fetchRecipesData();
         }),
