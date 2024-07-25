@@ -1,8 +1,8 @@
 # MyRecipesList
 
-Single page application for storing and managing cooking recipes.
-Created using Angular 17, TypeScript, Firebase (Hosting, Realtime Database, Storage and Authentication).  
-[Recipe List website](https://recipeslist-d7412.web.app/login) page.
+Single page application for storing and managing cooking recipes. <br />
+Created using Angular 17, TypeScript, Firebase (Hosting, Realtime Database, Storage and Authentication).  <br />
+[Recipe List website](https://recipeslist-d7412.web.app/login)
 
 
 ## Implemented functionalities:
